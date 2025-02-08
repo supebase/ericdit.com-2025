@@ -1,0 +1,244 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans+SC:wght@100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+@font-face {
+  font-display: swap;
+  font-family: "Janelotus";
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/Janelotus.woff) format("truetype");
+}
+
+html {
+  font-family: "Ubuntu", "Noto Sans SC";
+  font-weight: 400;
+  font-style: normal;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  /* scroll-behavior: smooth !important; */
+}
+
+body {
+  /* background-image: linear-gradient(hsl(210, 0%, 5%) 1px, transparent 1px),
+    linear-gradient(to right, hsl(210, 0%, 5%) 1px, #000000 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed; */
+  background-color: #09090b;
+  overflow-x: hidden;
+}
+
+.header::before {
+  background-image: linear-gradient(0deg,
+      transparent 0%,
+      rgba(9, 9, 1, 0.5) 15%,
+      rgba(9, 9, 1, 0.8) 30%,
+      rgba(9, 9, 1, 1) 50%,
+      rgba(9, 9, 1, 1) 100%);
+  top: 0;
+  content: "";
+  height: 100px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+/* 设置滚动条的宽度 */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* 设置滚动条的轨道 */
+::-webkit-scrollbar-track {
+  background: #18181b;
+  /* 深色背景 */
+}
+
+/* 设置滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  /* 深色滑块 */
+  border-radius: 6px;
+}
+
+/* 设置滚动条滑块的悬停效果 */
+::-webkit-scrollbar-thumb:hover {
+  background: #0a0a0a;
+  /* 悬停时的颜色 */
+}
+
+.eric-font {
+  font-family: "Janelotus";
+}
+
+.eric svg {
+  width: 40px;
+  height: auto;
+}
+
+@media (prefers-reduced-motion) {
+  .eric path {
+    animation: none !important;
+    stroke-dasharray: unset !important;
+  }
+}
+
+@keyframes write {
+  0% {
+    stroke-dashoffset: 1000px;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 只在 .eric 类下的路径应用动画 */
+.eric path:nth-child(1) {
+  stroke-dasharray: 1000px;
+  stroke-dashoffset: 1000px;
+  animation: write 5s ease forwards;
+  stroke: #fed7aa;
+}
+
+.eric path:nth-child(2) {
+  stroke-dasharray: 1000px;
+  stroke-dashoffset: 1000px;
+  animation: write 5s ease forwards;
+  animation-delay: 1.5s;
+  stroke: #fed7aa;
+}
+
+.eric path:nth-child(3) {
+  stroke-dasharray: 1000px;
+  stroke-dashoffset: 1000px;
+  animation: write 5s ease forwards;
+  animation-delay: 2s;
+  stroke: #fed7aa;
+}
+
+.year-stroke {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  transform: scaleY(0.96);
+  display: inline-block;
+  -webkit-text-stroke: 2px #18181b;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.git-nums {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.prose {
+  max-width: 100%;
+}
+
+.post a {
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  text-decoration-style: dotted;
+}
+
+.post img {
+  border-radius: 8px;
+}
+
+.post hr,
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right,
+      rgba(113, 113, 122, 0),
+      rgba(113, 113, 122, 0.45),
+      rgba(113, 113, 122, 0));
+}
+
+.swiper-cards {
+  overflow: visible !important;
+}
+
+.swiper-cards .swiper-slide {
+  transform-origin: center bottom !important;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+  overflow: hidden !important;
+}
+
+/* 导航按钮基础样式 */
+.swiper-nav {
+  pointer-events: auto; /* 允许交互 */
+}
+
+.swiper-button-disabled {
+  opacity: 0.2 !important;
+  cursor: not-allowed !important;
+}
+
+/* 定义圆形路径的动画 */
+@keyframes drawCircle {
+  from {
+    stroke-dashoffset: 64;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 定义对勾路径的动画 */
+@keyframes drawCheck {
+  from {
+    stroke-dashoffset: 6;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 应用圆形路径的动画 */
+.circle {
+  animation: drawCircle 0.8s forwards;
+}
+
+/* 应用对勾路径的动画，延迟0.9s开始 */
+.check {
+  animation: drawCheck 0.5s 0.9s forwards;
+}
+
+.cube {
+  border: 0;
+  background: #fed7aa;
+  background: -moz-linear-gradient(-32deg, #71717a90 20%, #fed7aa90 40%, #f9731690 100%);
+  background: -webkit-linear-gradient(-32deg, #71717a90 20%, #fed7aa90 40%, #f9731690 100%);
+  background: linear-gradient(142deg, #71717a90 20%, #fed7aa90 40%, #f9731690 100%);
+  padding: 1px;
+}

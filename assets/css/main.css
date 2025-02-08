@@ -1,0 +1,260 @@
+/* Base styles */
+:root {
+    --color-contrast: #000;
+    --color-background: #18181b;
+    --color-background-100: #fff;
+    --color-background-200: #f1f1f1;
+    --color-background-300: #eaeaea;
+    --color-background-400: #dbdbdb;
+    --color-foreground: #333;
+    --color-secondary: grey;
+    --color-mute: #a8a8a8;
+    --color-border: hsla(0, 0%, 40%, .2);
+    --color-success: #348f3f;
+    --color-error: #ff4c4c;
+    --font-family-headings: var(--gh-font-heading, "Geist", sans-serif);
+    --font-family-body: var(--gh-font-body, "Geist", sans-serif);
+    --font-family-button: var(--gh-font-body, "Geist", sans-serif);
+    --font-small: 0.875rem;
+    --font-x-small: 0.75rem;
+    --font-h1: 1.125rem;
+    --font-h2: 1.063rem;
+    --font-h3: 1rem;
+    --font-h4: 1rem;
+    --font-h5: 1rem;
+    --font-h6: 1rem;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --spacing-1: 0.125rem;
+    --spacing-2: 0.25rem;
+    --spacing-3: 0.375rem;
+    --spacing-4: 0.5rem;
+    --spacing-5: 0.625rem;
+    --spacing-6: 0.75rem;
+    --spacing-7: 1rem;
+    --spacing-8: 1.25rem;
+    --spacing-9: 1.875rem;
+    --spacing-10: 2.5rem;
+    --radius-1: 8px;
+    --radius-2: 8px;
+    --padding-v: var(--spacing-9);
+    --padding-h: var(--spacing-8);
+    --button--color: var(--color-contrast);
+    --button--background-color: var(--color-background-300);
+    --button-hover--color: var(--color-contrast);
+    --button-hover--background-color: var(--color-background-400);
+    --button-hover--opacity: 1;
+}
+
+/* Dark mode */
+:root[data-color-scheme=dark] {
+    --color-contrast: #fff;
+    --color-background: #1f2023;
+    --color-background-100: #131416;
+    --color-background-200: #2c2d30;
+    --color-background-300: #35373b;
+    --color-background-400: #4e4e54;
+    --color-foreground: #c7cbd5;
+    --color-secondary: #9295a0;
+    --color-mute: #777a88;
+    --color-border: hsla(235, 6%, 60%, .4);
+}
+
+/* Layout */
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-10);
+    padding: 0 var(--padding-h);
+    margin-bottom: auto;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Section */
+.section {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-7) 0;
+}
+
+.section-title {
+
+    flex: 1 0 0%;
+    font-size: var(--font-small);
+    padding: 0 var(--spacing-3);
+}
+
+/* Featured Slider */
+.section-featured {
+    position: relative;
+}
+
+.featured-slider {
+    width: 100%;
+    overflow: hidden;
+}
+
+.featured-slider .swiper-slide {
+    height: auto;
+}
+
+.featured-slider:not(.swiper-initialized) .swiper-wrapper {
+    gap: var(--spacing-7);
+    overflow-y: scroll;
+}
+
+.featured-slider .card {
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2);
+    height: 100%;
+    padding: var(--spacing-7) var(--spacing-8);
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.featured-slider .card-footer {
+    margin-top: auto;
+}
+
+/* Card Components */
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
+    position: relative;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+}
+
+.card-title {
+    font-family: var(--font-family-headings);
+    font-size: var(--font-h6);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+}
+
+.card-title>a {
+    display: block;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s ease;
+}
+
+.card-title>a:hover {
+    text-decoration-color: currentColor;
+}
+
+.card-meta {
+    color: var(--color-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-x-small);
+    font-weight: var(--font-weight-medium);
+}
+
+.card-primary-tag:not(:hover) {
+    color: var(--color-secondary);
+    text-decoration-color: transparent;
+}
+
+.card-content {
+    font-size: var(--font-small);
+}
+
+.card-content p {
+    margin-bottom: 0;
+}
+
+.card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) 0;
+    margin-top: auto;
+}
+
+/* Buttons */
+.button {
+    align-items: center;
+    background-color: var(--button--background-color);
+    border: 0;
+    border-radius: var(--radius-1);
+    color: var(--button--color);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--font-family-button);
+    font-size: var(--font-small);
+    font-weight: var(--font-weight-medium);
+    gap: var(--spacing-2);
+    justify-content: center;
+    line-height: 1;
+    min-height: 2.25rem;
+    padding: var(--spacing-4) var(--spacing-7);
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    z-index: 1;
+}
+
+.button:hover {
+    background-color: var(--button-hover--background-color);
+    color: var(--button-hover--color);
+    opacity: var(--button-hover--opacity);
+}
+
+.button-grey {
+    --button--color: var(--color-contrast);
+    --button--background-color: var(--color-background-300);
+}
+
+.button-xs {
+    font-size: var(--font-x-small);
+    min-height: 1.625rem;
+    padding: var(--spacing-3) var(--spacing-4);
+}
+
+/* Navigation buttons */
+.featured-slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.featured-slider-button-prev {
+    left: -1.5rem;
+}
+
+.featured-slider-button-next {
+    right: -1.5rem;
+}
+
+/* Screen reader text */
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal !important;
+}
