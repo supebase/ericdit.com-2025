@@ -1,4 +1,4 @@
-# Nuxt Minimal Starter
+# Nuxt 3，Directus Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -9,15 +9,6 @@ Make sure to install dependencies:
 ```bash
 # npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -27,15 +18,6 @@ Start the development server on `http://localhost:3000`:
 ```bash
 # npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -46,30 +28,14 @@ Build the application for production:
 # npm
 npm run build
 
-# pnpm
-pnpm build
+// 每次运行都会自动升级 patch 版本 (0.7.2 → 0.7.3 → 0.7.4)
+// npm run build
 
-# yarn
-yarn build
+// 升级 minor 版本 (0.7.2 → 0.8.0)
+// VERSION_BUMP_TYPE=minor npm run build
 
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+// 升级 major 版本 (0.7.2 → 1.0.0)
+// VERSION_BUMP_TYPE=major npm run build
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
