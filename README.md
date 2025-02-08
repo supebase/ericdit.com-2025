@@ -38,7 +38,7 @@ npm run build
 // VERSION_BUMP_TYPE=major npm run build
 ```
 
-推荐 Build 项目，服务器执行 PM2 start ecosystem.config.js
+推荐使用 Build 命令生成项目，服务器安装 sudo npm install pm2@latest -g，执行 PM2 start ecosystem.config.js 运行项目。
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 # ericdit.com
