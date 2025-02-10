@@ -50,7 +50,7 @@
                 <div class="card-footer flex items-center justify-between">
                   <UBadge variant="solid" color="white" class="select-none opacity-70">{{
                     post.tag ? post.tag.name : 'AI 创作' }}</UBadge>
-                  <CommentCounter :post_id="post.id" :isHome="true" />
+                  <CommentCounter :post_id="post.id" :isHome="true" :allowComment="post.allowComment" />
                 </div>
               </article>
             </div>

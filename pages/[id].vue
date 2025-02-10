@@ -67,12 +67,21 @@
 
             <div class="my-8 text-base text-gray-600 space-y-8">
 
-                <div v-if="authStore.user" class="py-4">
-                    <CommentForm :post_id="post?.id" :user_id="authStore.user.id" />
+                <div v-if="post?.allowComment">
+                    <div v-if="authStore.user" class="py-4">
+                        <CommentForm :post_id="post?.id" :user_id="authStore.user.id" />
+                    </div>
+
+                    <CommentCounter :post_id="post?.id" />
+                    <CommentComments :post_id="post?.id" />
                 </div>
 
-                <CommentCounter :post_id="post?.id" />
-                <CommentComments :post_id="post?.id" />
+                <div v-else>
+                    <UDivider label="本页面禁止发表评论" :ui="{ label: 'text-gray-500' }" type="dashed" class="py-1" />
+                    <div class="flex justify-center items-center mt-8 pb-6 space-y-4">
+                        <UIcon name="hugeicons:comment-block-02" class="w-12 h-12 text-gray-800" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 <template>
     <div v-if="props.isHome" class="flex items-center space-x-2">
-        <UIcon name="hugeicons:comment-02" class="w-4 h-4 text-gray-500" />
-        <span class="text-sm text-gray-500 git-nums">{{ comments?.length || 0 }}</span>
+        <UIcon :name="props.allowComment ? `hugeicons:comment-02` : `hugeicons:comment-block-02`" class="w-4 h-4 text-gray-500" />
+        <span class="text-sm text-gray-500 git-nums">{{ props.allowComment ? comments?.length || 0 : '' }}</span>
     </div>
-    <div v-else>
+    <div v-else class="mt-4">
         <UDivider :label="!comments?.length ? `评论区空空如也，快来留下足迹！` : `已有 ${comments?.length || 0} 条评论，快来加入讨论！`"
             :ui="{ label: 'text-gray-500' }" type="dashed" class="py-1" />
     </div>
@@ -21,6 +21,10 @@ const props = defineProps({
     isHome: {
         type: Boolean,
         default: false,
+    },
+    allowComment: {
+        type: Boolean,
+        default: true,
     },
 });
 

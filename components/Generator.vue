@@ -110,7 +110,7 @@ const generateAIPost = async () => {
         }
 
         if (!authStore.user?.token) {
-            showNotification('ai-error', 'error', '操作需要登录权限');
+            showNotification('ai-error', 'error', '操作需要登录管理员权限');
             isOpen.value = false;
             return;
         }
