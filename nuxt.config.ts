@@ -9,7 +9,17 @@ export default defineNuxtConfig({
 
   experimental: {
     appManifest: false,
-    payloadExtraction: false,
+    payloadExtraction: true,
+  },
+
+  vite: {
+    build: {
+      minify: "terser",
+    },
+  },
+
+  nitro: {
+    compressPublicAssets: true,
   },
 
   runtimeConfig: {
