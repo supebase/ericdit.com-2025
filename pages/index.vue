@@ -31,7 +31,7 @@
                           {{ useFormatDate(post.date_created) }}
                         </div>
                         <template #text>
-                          <span>{{ useFormatDate(post.date_updated) }}更新</span>
+                          <span>{{ useFormatDate(post.date_updated) }}{{ $t('post_updated') }}</span>
                         </template>
                       </UTooltip>
                       <div v-else class="text-gray-500 text-[13px] select-none">
@@ -40,7 +40,7 @@
                     </time>
                     <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
                     <div class="text-gray-500 text-[13px] select-none">
-                      阅读约需 {{ useReadingTime(post.content) }}
+                      {{ $t('common_readingtime') }} {{ useReadingTime(post.content) }}
                     </div>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="card-footer flex items-center justify-between">
                   <UBadge variant="solid" color="white" class="select-none opacity-70">{{
-                    post.tag ? post.tag.name : 'AI 创作' }}</UBadge>
+                    post.tag ? post.tag.name : $t('post_tag_ai') }}</UBadge>
                   <CommentCounter :post_id="post.id" :isHome="true" :allowComment="post.allowComment" />
                 </div>
               </article>
@@ -66,8 +66,9 @@ import Swiper from 'swiper';
 import { EffectCards, Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
 
-const { $directus, $readItems } = useNuxtApp()
-const { showNotification } = useNotification()
+const { $directus, $readItems } = useNuxtApp();
+const { t } = useI18n();
+const { showNotification } = useNotification();
 
 const { on: postUpdated } = useEventBus<string>('updated')
 
@@ -84,7 +85,7 @@ const { data: posts, error, refresh } = await useAsyncData('posts', async () => 
 postUpdated((msg) => {
   if (msg === 'isUpdated') {
     setTimeout(() => {
-      showNotification('post-change', 'success', "检测到页面变更，刷新页面加载最新内容。");
+      showNotification('post-change', 'success', t('post_success_changed_msg'));
     }, 500)
   }
 });
@@ -152,6 +153,6 @@ onMounted(() => {
 });
 
 useSeoMeta({
-  title: '首页',
+  title: t('common_home'),
 });
 </script>

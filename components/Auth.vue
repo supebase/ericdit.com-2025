@@ -18,28 +18,30 @@
                 </template>
 
                 <div v-if="item.key === 'login'" class="space-y-3">
-                  <UInput ref="emailInput" icon="hugeicons:at" size="lg" color="white" autofocus :trailing="false" placeholder="电子邮件" type="email"
-                    v-model="email" />
-                  <UInput icon="hugeicons:lock-key" size="lg" color="white" :trailing="false" placeholder="登录密码"
-                    type="password" v-model="password" />
+                  <UInput ref="emailInput" icon="hugeicons:at" size="lg" color="white" autofocus :trailing="false"
+                    :placeholder="$t('auth_login_email')" type="email" v-model="email" />
+                  <UInput icon="hugeicons:lock-key" size="lg" color="white" :trailing="false"
+                    :placeholder="$t('auth_login_password')" type="password" v-model="password" />
                 </div>
                 <div v-else-if="item.key === 'register'" class="space-y-3">
-                  <UInput ref="emailSignupInput" icon="hugeicons:at" size="lg" color="white" autofocus :trailing="false" placeholder="电子邮件" type="email"
-                    v-model="emailSignup" />
-                  <UInput icon="hugeicons:user-square" size="lg" color="white" :trailing="false" placeholder="你的名字" type="text"
-                    v-model="nameSignup" />
-                  <UInput icon="hugeicons:square-lock-add-02" size="lg" color="white" :trailing="false" placeholder="输入密码"
-                    type="password" v-model="passwordSignup" />
-                  <UInput icon="hugeicons:square-lock-check-02" size="lg" color="white" :trailing="false" placeholder="确认密码"
-                    type="password" v-model="confirmPasswordSignup" />
+                  <UInput ref="emailSignupInput" icon="hugeicons:at" size="lg" color="white" autofocus :trailing="false"
+                    :placeholder="$t('auth_register_email')" type="email" v-model="emailSignup" />
+                  <UInput icon="hugeicons:user-square" size="lg" color="white" :trailing="false"
+                    :placeholder="$t('auth_register_name')" type="text" v-model="nameSignup" />
+                  <UInput icon="hugeicons:square-lock-add-02" size="lg" color="white" :trailing="false"
+                    :placeholder="$t('auth_register_password')" type="password" v-model="passwordSignup" />
+                  <UInput icon="hugeicons:square-lock-check-02" size="lg" color="white" :trailing="false"
+                    :placeholder="$t('auth_register_confirm_password')" type="password"
+                    v-model="confirmPasswordSignup" />
                 </div>
                 <template #footer>
                   <div class="flex justify-between">
                     <UButton type="submit" size="md" color="primary" class="font-semibold" :loading="loading"
                       :disabled="loading">
-                      {{ item.key === 'login' ? '登录' : '注册' }}
+                      {{ item.key === 'login' ? $t('auth_login') : $t('auth_register') }}
                     </UButton>
-                    <UButton label="取消" size="md" color="gray" class="font-semibold" @click="isOpen = false" />
+                    <UButton :label="$t('auth_cancel')" size="md" color="gray" class="font-semibold"
+                      @click="isOpen = false" />
                   </div>
                 </template>
               </UCard>
@@ -63,6 +65,7 @@
 <script setup lang="ts">
 const { $authClient, $registerUser, $readMe, $updateUser } = useNuxtApp();
 const authStore = useAuthStore();
+const { t } = useI18n();
 
 interface User {
   id: string;
@@ -82,12 +85,12 @@ const emailSignupInput = ref();
 
 const items = [{
   key: 'login',
-  label: '登录',
-  description: '请使用您的注册信息进行登录'
+  label: t('auth_login'),
+  description: t('auth_login_info'),
 }, {
   key: 'register',
-  label: '注册',
-  description: '只需简单几步就可以创建一个账户'
+  label: t('auth_register'),
+  description: t('auth_register_info'),
 }]
 
 // 表单数据和状态管理
@@ -109,7 +112,7 @@ const openUserInfoModal = () => {
 // 注册功能
 const handleRegister = async () => {
   if (!emailSignup.value || !passwordSignup.value || !nameSignup.value || !confirmPasswordSignup.value) {
-    showNotification('register', 'warning', '请完整填写所有必填字段信息');
+    showNotification('register', 'warning', t('auth_register_warning_msg'));
     return;
   }
 
@@ -117,24 +120,24 @@ const handleRegister = async () => {
   const isChinese = /[\u4e00-\u9fa5]/.test(nameSignup.value); // 判断是否包含中文字符
   const maxLength = isChinese ? 8 : 20;
   if (isChinese && nameSignup.value.length < 2) {
-    showNotification('register-cname', 'warning', '中文名字至少需要 2 个字');
+    showNotification('register-cname', 'warning', t('auth_register_warning_chinese_length_min_msg'));
     return;
   } else if (!isChinese && nameSignup.value.length < 3) {
-    showNotification('register-ename', 'warning', '英文名字至少需要 3 个字母');
+    showNotification('register-ename', 'warning', t('auth_register_warning_english_length_min_msg'));
     return;
   }
   if (nameSignup.value.length > maxLength) {
-    showNotification('register-name', 'warning', isChinese ? '中文名字最多 8 个字' : '英文名字最多 20 个字母');
+    showNotification('register-name', 'warning', isChinese ? t('auth_register_warning_chinese_length_max_msg') : t('auth_register_warning_english_length_max_msg'));
     return;
   }
 
   if (passwordSignup.value.length < 8) {
-    showNotification('register-pwd', 'warning', '密码长度不能少于 8 个字符');
+    showNotification('register-pwd', 'warning', t('auth_register_warning_password_length_msg'));
     return;
   }
 
   if (passwordSignup.value !== confirmPasswordSignup.value) {
-    showNotification('register-pwds', 'warning', '两次输入的密码不匹配');
+    showNotification('register-pwds', 'warning', t('auth_register_confirm_password_msg'));
     return;
   }
 
@@ -148,9 +151,9 @@ const handleRegister = async () => {
     passwordSignup.value = "";
     confirmPasswordSignup.value = "";
 
-    showNotification('register-login', 'success', "注册成功，立即登录。");
+    showNotification('register-login', 'success', t('auth_register_success_msg'));
   } catch (error: any) {
-    showNotification('register-error', 'error', error.errors?.[0]?.message || "注册失败，请稍后重试");
+    showNotification('register-error', 'error', error.errors?.[0]?.message || t('auth_register_error_msg'));
     loading.value = false;
   }
 };
@@ -158,12 +161,12 @@ const handleRegister = async () => {
 // 登录功能
 const handleLogin = async () => {
   if (!email.value || !password.value) {
-    showNotification('login', 'warning', '请输入有效的电子邮件及登录密码');
+    showNotification('login', 'warning', t('auth_login_warning_msg'));
     return;
   }
 
   if (!validateEmail(email.value)) {
-    showNotification('login-email', 'warning', '请输入有效的电子邮件地址');
+    showNotification('login-email', 'warning', t('auth_login_warning_email_msg'));
     return;
   }
 
@@ -188,10 +191,10 @@ const handleLogin = async () => {
       email.value = "";
       password.value = "";
 
-      showNotification('login-success', 'success', "您已成功登录");
+      showNotification('login-success', 'success', t('auth_login_success_msg'));
     }
   } catch (error: any) {
-    showNotification('login-error', 'error', error.errors?.[0]?.message || "登出失败，请稍后重试");
+    showNotification('login-error', 'error', error.errors?.[0]?.message || t('auth_login_error_msg'));
     loading.value = false;
   }
 };

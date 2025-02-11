@@ -11,7 +11,7 @@
                         <Emoji @emoji="handleEmojiInsert" />
                         <div class="text-sm text-gray-700 flex items-center space-x-1.5">
                             <UIcon name="streamline:markdown-circle-programming" class="w-[18px] h-[18px]" />
-                            <div>Markdown 语法</div>
+                            <div>{{ $t('comment_markdown') }}</div>
                         </div>
                     </div>
 
@@ -34,8 +34,9 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $createItem } = useNuxtApp()
-const { showNotification } = useNotification()
+const { $directus, $createItem } = useNuxtApp();
+const { t } = useI18n();
+const { showNotification } = useNotification();
 
 // 定义 props
 const props = defineProps({
@@ -57,12 +58,12 @@ const replyingToCommentId = ref("")
 
 // 定义提示语数组
 const placeholders = [
-    "说点什么吧 ...",
-    "有什么想法？欢迎留言~",
-    "灵感来袭？快写下您的独特见解！",
-    "分享您的故事或经验，让大家听听吧！",
-    "喜欢或不喜欢？说说原因吧！",
-    "欢迎加入讨论，畅所欲言~",
+    t('comment_placeholders_1'),
+    t('comment_placeholders_2'),
+    t('comment_placeholders_3'),
+    t('comment_placeholders_4'),
+    t('comment_placeholders_5'),
+    t('comment_placeholders_6'),
 ];
 
 const randomPlaceholder = ref("");
@@ -95,7 +96,7 @@ const handleInput = (event: Event) => {
         comment.value = value.slice(0, 300); // 更新 v-model 绑定的值
         target.value = comment.value; // 直接更新输入框的值
         if (!toastActive.value) { // 避免频繁 toast 提示
-            showNotification('comment-error', 'error', '评论字数不能超过 300 字');
+            showNotification('comment-error', 'error', t('comment_error_msg'));
             toastActive.value = true;
             setTimeout(() => {
                 toastActive.value = false;
@@ -116,12 +117,12 @@ const isCommentExceedLimit = computed(() => {
 
 const handlePostComment = async () => {
     if (isCommentEmpty.value) {
-        showNotification('comment-warning', 'warning', '评论内容不能为空');
+        showNotification('comment-warning', 'warning', t('comment_warning_msg'));
         return;
     }
 
     if (isCommentExceedLimit.value) {
-        showNotification('comment-error', 'error', '评论字数不能超过 300 字');
+        showNotification('comment-error', 'error', t('comment_error_msg'));
         return;
     }
 
@@ -138,7 +139,7 @@ const handlePostComment = async () => {
         comment.value = ""; // 清空评论框
         loading.value = false;
 
-        showNotification('comment-success', 'success', isReplying.value ? '回复提交成功' : '评论提交成功');
+        showNotification('comment-success', 'success', isReplying.value ? t('comment_success_reply_msg') : t('comment_success_msg'));
 
         const { emit: comments } = useEventBus<string>('comment-posted')
         comments('isCommentUpdated')
@@ -150,13 +151,13 @@ const handlePostComment = async () => {
                 const { emit: scrollToReply } = useEventBus<string>('scroll-to-reply');
                 scrollToReply(`reply-${replyId}`);
             } else {
-                console.error('回复提交成功，但未返回有效的 id');
+                console.error(t('comment_success_scroll_error'));
             }
         }
 
         isReplying.value = false;
     } catch (error) {
-        showNotification('comment-err', 'error', isReplying.value ? '回复提交失败' : '评论提交失败');
+        showNotification('comment-err', 'error', isReplying.value ? t('comment_error_reply_msg') : t('comment_error_submit_msg'));
     }
 }
 
@@ -194,7 +195,7 @@ onReply(({ comment, user }) => {
     isReplying.value = true;
     replyingToUser.value = user.first_name;
     replyingToCommentId.value = comment.id;
-    randomPlaceholder.value = `回复：${replyingToUser.value}`;
+    randomPlaceholder.value = replyingToUser.value ? `${t('comment_reply_to')}${replyingToUser.value}` : '';
     commentInput.value.$el.querySelector('textarea').focus();
 });
 

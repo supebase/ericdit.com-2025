@@ -19,8 +19,8 @@
             </template>
 
             <div class="flex flex-col items-center">
-                <UInput icon="hugeicons:text-circle" size="lg" color="white" :trailing="false" placeholder="输入关键词，用逗号分隔"
-                    type="text" class="w-full" v-model="keywords" />
+                <UInput icon="hugeicons:text-circle" size="lg" color="white" :trailing="false"
+                    :placeholder="$t('ai_generator_info')" type="text" class="w-full" v-model="keywords" />
             </div>
 
             <template #footer>
@@ -37,6 +37,7 @@
 <script setup lang="ts">
 const { $directus, $createItem } = useNuxtApp();
 const authStore = useAuthStore();
+const { t } = useI18n();
 const { showNotification } = useNotification();
 
 import type { ArticleData } from '~/types/article';
@@ -54,8 +55,8 @@ onBeforeUnmount(() => {
 });
 
 const getButtonLabel = computed(() => {
-    if (isCompleted.value) return '完成 AI 创作'
-    return loading.value ? `等待 ${estimatedTime.value} 秒` : '开始创作'
+    if (isCompleted.value) return t('ai_generator_complated')
+    return loading.value ? t('ai_generator_waiting', { time: estimatedTime.value }) : t('ai_generator_start')
 })
 
 // 方法拆分
@@ -105,12 +106,12 @@ const generateAIPost = async () => {
     try {
         // 验证阶段
         if (!validateKeywords()) {
-            showNotification('ai-keyword', 'warning', '请输入有效关键词（逗号分隔）');
+            showNotification('ai-keyword', 'warning', t('ai_generator_warning_msg'));
             return;
         }
 
         if (!authStore.user?.token) {
-            showNotification('ai-error', 'error', '操作需要登录管理员权限');
+            showNotification('ai-error', 'error', t('ai_generator_error_msg'));
             isOpen.value = false;
             return;
         }
@@ -128,11 +129,11 @@ const generateAIPost = async () => {
         await submitArticle(generatedContent);
 
         // 完成处理
-        showNotification('ai-success', 'success', '文章已自动发布');
+        showNotification('ai-success', 'success', t('ai_generator_success_msg'));
         keywords.value = "";
         isCompleted.value = true;
     } catch (error: any) {
-        showNotification('ai-error', 'error', '操作失败: ' + error.message);
+        showNotification('ai-error', 'error', error.message);
     } finally {
         loading.value = false;
         if (timerId) clearInterval(timerId);

@@ -27,8 +27,9 @@
 
 <script setup lang="ts">
 const { $authClient, $readFile, $uploadFiles, $deleteFile, $updateUser, $readMe } = useNuxtApp();
-
 const authStore = useAuthStore();
+const { t } = useI18n();
+
 const { showNotification } = useNotification()
 
 const fileInput = ref<HTMLInputElement | null>(null); // 文件输入引用
@@ -61,7 +62,7 @@ const handleFileUpload = (event: Event) => {
             file.value = uploadedFile;
             uploadAvatar();
         } else {
-            showNotification('avatar-error', 'error', '文件格式不支持或文件大小超过 2MB');
+            showNotification('avatar-error', 'error', t('avatar_error_limit_msg'));
         }
     }
 };
@@ -105,11 +106,11 @@ const uploadAvatar = async () => {
             // 清空文件输入
             file.value = null;
         } else {
-            showNotification('avatar-error-upload', 'error', '上传失败，返回的文件信息无效');
+            showNotification('avatar-error-upload', 'error', t('avatar_error_info_msg'));
             //console.error(uploadResponse);
         }
     } catch (error) {
-        showNotification('avatar-error-upload-retry', 'error', '上传失败，请重试！');
+        showNotification('avatar-error-upload-retry', 'error', t('avatar_error_retry_msg'));
         //console.error(error);
     } finally {
         isLoading.value = false; // 结束加载
@@ -138,7 +139,7 @@ const deleteAvatar = async () => {
         const updatedUser = await $authClient.request($readMe({ fields: ['id', 'email', 'first_name', 'avatar'] })) as User;
         authStore.setUser(updatedUser);
     } catch (error) {
-        showNotification('avatar-error-delete', 'error', '删除失败，请重试！');
+        showNotification('avatar-error-delete', 'error', t('avatar_error_delete_msg'));
         //console.error(error);
     } finally {
         isLoading.value = false; // 结束加载
@@ -160,7 +161,7 @@ const fetchCurrentAvatar = async () => {
             isLoading.value = false;
         }
     } catch (error) {
-        showNotification('avatar-error-read', 'error', '读取头像失败');
+        showNotification('avatar-error-read', 'error', t('avatar_error_read_msg'));
         //console.error(error);
     }
 };

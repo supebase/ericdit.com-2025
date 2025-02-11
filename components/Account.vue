@@ -28,7 +28,7 @@
           </div>
           <div class="py-2">
             <UButton type="button" size="md" color="black" class="font-semibold" @click="handleLogout"
-              :loading="loading" :disabled="loading">退出登录</UButton>
+              :loading="loading" :disabled="loading">{{ $t('auth_logout') }}</UButton>
           </div>
         </template>
       </div>
@@ -39,6 +39,8 @@
 <script setup lang="ts">
 const { $authClient } = useNuxtApp();
 const authStore = useAuthStore();
+const { t } = useI18n();
+
 const isOpen = ref(false); // 控制模态框的显示
 const loading = ref(false);
 const user = computed(() => authStore.user); // 获取用户信息
@@ -61,9 +63,9 @@ const handleLogout = async () => {
     await $authClient.logout();
     authStore.clearUser(); // 清除全局状态
 
-    showNotification('logout', 'warning', '你已经退出登录');
+    showNotification('logout', 'warning', t('auth_logout_warning_msg'));
   } catch (error: any) {
-    showNotification('logout-error', 'error', error.errors?.[0]?.message || '登出失败，请稍后重试');
+    showNotification('logout-error', 'error', error.errors?.[0]?.message || t('auth_logout_error_msg'));
   } finally {
     loading.value = false;
     isOpen.value = false; // 关闭模态框

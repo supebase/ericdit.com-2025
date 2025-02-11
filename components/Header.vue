@@ -41,7 +41,7 @@
                 </NuxtLink>
             </div> -->
 
-            <UBadge :ui="{ rounded: 'rounded-lg', icon: { base: 'flex-shrink-0 mr-0.5' } }" label="滑动卡片" color="gray"
+            <UBadge :ui="{ rounded: 'rounded-lg', icon: { base: 'flex-shrink-0 mr-0.5' } }" :label="$t('swipe_cards')" color="gray"
                 icon="hugeicons:touchpad-04" size="md" variant="soft"
                 class="transform transition-all duration-500 ease-in-out select-none"
                 :class="$route.path !== '/' ? 'translate-x-6 opacity-0' : 'translate-x-0 opacity-100'" />

@@ -20,8 +20,9 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $readItems, $createItem } = useNuxtApp()
-const { showNotification } = useNotification()
+const { $directus, $readItems, $createItem } = useNuxtApp();
+const { t } = useI18n();
+const { showNotification } = useNotification();
 
 const props = defineProps({
     target_id: { type: String, required: true },
@@ -76,12 +77,12 @@ const handleClickLike = async () => {
     lastClickTime = Date.now()
 
     if (!props.user_id) {
-        showNotification('like-login', 'error', '请先登录后在进行操作')
+        showNotification('like-login', 'error', t('like_error_login_msg'))
         return
     }
 
     if (hasLiked.value) {
-        showNotification('liked-err', 'error', '已经点过赞了，请不要重复')
+        showNotification('liked-error', 'error', t('like_error_repeat_msg'))
         return
     }
 
@@ -102,7 +103,7 @@ const handleClickLike = async () => {
         // 更新本地状态
         likes.value = [...likes.value, { user_created: props.user_id }]
         hasLiked.value = true
-        showNotification('like-success', 'success', '点赞成功，感谢支持')
+        showNotification('like-success', 'success', t('like_success_msg'))
 
         // 触发数字滚动动画
         translateY.value = -100
@@ -111,7 +112,7 @@ const handleClickLike = async () => {
             updateNumbers()
         }, 300)
     } catch (error) {
-        showNotification('like-err', 'error', '点赞时发生错误，请重试')
+        showNotification('like-err', 'error', t('like_error_msg'))
     } finally {
         loading.value = false
     }

@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: false },
   ssr: false,
-  modules: ["@vueuse/nuxt", "@nuxt/ui", "@pinia/nuxt", "nuxt-emoji-picker"],
+  modules: ["@vueuse/nuxt", "@nuxt/ui", "@pinia/nuxt", "nuxt-emoji-picker", "@nuxtjs/i18n"],
 
   experimental: {
     appManifest: false,
@@ -95,4 +95,10 @@ export default defineNuxtConfig({
     preference: "dark",
     classSuffix: "",
   },
+
+  i18n: {
+    vueI18n: './i18n.config.ts',
+    locales: ['cn'],
+    defaultLocale: "cn",
+  }
 });

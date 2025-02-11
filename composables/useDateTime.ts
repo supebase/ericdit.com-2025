@@ -8,22 +8,44 @@ export function useFormatDate(date: Date | string | number, customMessages: Cust
     }
 
     const timeAgo = useTimeAgo(date);
+    const { t } = useI18n();
 
     const messages: CustomMessages = {
-        justNow: '刚刚',
-        past: (n: string) => `${n}前`,
-        future: (n: string) => `${n}后`,
-        month: (n: string, past: boolean) => `${n} 个月${past ? '前' : '后'}`,
-        year: (n: string, past: boolean) => `${n} 年${past ? '前' : '后'}`,
-        day: (n: string, past: boolean) => `${n} 天${past ? '前' : '后'}`,
-        week: (n: string, past: boolean) => `${n} 周${past ? '前' : '后'}`,
-        hour: (n: string, past: boolean) => `${n} 小时${past ? '前' : '后'}`,
-        minute: (n: string, past: boolean) => `${n} 分钟${past ? '前' : '后'}`,
-        second: (n: string, past: boolean) => `${n} 秒${past ? '前' : '后'}`,
-        yesterday: '昨天',
-        lastWeek: '上周',
-        lastMonth: '上个月',
-        lastYear: '去年',
+        justNow: t('common_justnow'),
+        past: (n: string) => t('common_time_past', { n }), // 使用插值
+        future: (n: string) => t('common_time_future', { n }), // 使用插值
+        month: (n: string, past: boolean) =>
+            past
+                ? t('common_time_past', { n: t('common_time_month', { n }) }) // 例如：3 个月前
+                : t('common_time_future', { n: t('common_time_month', { n }) }), // 例如：3 个月后
+        year: (n: string, past: boolean) =>
+            past
+                ? t('common_time_past', { n: t('common_time_year', { n }) }) // 例如：2 年前
+                : t('common_time_future', { n: t('common_time_year', { n }) }), // 例如：2 年后
+        day: (n: string, past: boolean) =>
+            past
+                ? t('common_time_past', { n: t('common_time_day', { n }) }) // 例如：5 天前
+                : t('common_time_future', { n: t('common_time_day', { n }) }), // 例如：5 天后
+        week: (n: string, past: boolean) =>
+            past
+                ? t('common_time_past', { n: t('common_time_week', { n }) }) // 例如：1 周前
+                : t('common_time_future', { n: t('common_time_week', { n }) }), // 例如：1 周后
+        hour: (n: string, past: boolean) =>
+            past
+                ? t('common_time_past', { n: t('common_time_hour', { n }) }) // 例如：2 小时前
+                : t('common_time_future', { n: t('common_time_hour', { n }) }), // 例如：2 小时后
+        minute: (n: string, past: boolean) =>
+            past
+                ? t('common_time_past', { n: t('common_time_minute', { n }) }) // 例如：10 分钟前
+                : t('common_time_future', { n: t('common_time_minute', { n }) }), // 例如：10 分钟后
+        second: (n: string, past: boolean) =>
+            past
+                ? t('common_time_past', { n: t('common_time_second', { n }) }) // 例如：30 秒前
+                : t('common_time_future', { n: t('common_time_second', { n }) }), // 例如：30 秒后
+        yesterday: t('common_yesterday'),
+        lastWeek: t('common_lastweak'),
+        lastMonth: t('common_lastmonth'),
+        lastYear: t('common_lastyear'),
         ...customMessages,
     };
 
@@ -47,6 +69,8 @@ export function useFormatDate(date: Date | string | number, customMessages: Cust
 }
 
 export function useReadingTime(text: string) {
+    const { t } = useI18n();
+
     const englishReadingSpeed = 200; // 英文单词
     const chineseReadingSpeed = 400; // 中文字符
 
@@ -54,5 +78,5 @@ export function useReadingTime(text: string) {
     const count = isChinese ? text.replace(/[^\x00-\xff]/g, "xx").length : text.split(/\s+/).length;
     const speed = isChinese ? chineseReadingSpeed : englishReadingSpeed;
 
-    return Math.ceil(count / speed) + " 分钟";
+    return Math.ceil(count / speed) + t('common_readingtime_minute');
 }

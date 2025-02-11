@@ -3,13 +3,13 @@
         <div v-if="!comments || comments?.length === 0">
             <div class="flex flex-col justify-center items-center m-4 pb-6 space-y-4">
                 <UIcon name="hugeicons:comment-01" class="w-12 h-12 text-gray-800" />
-                <div class="text-sm">欢迎在评论区分享您的想法！</div>
+                <div class="text-sm">{{ $t('comment_welcome') }}</div>
             </div>
         </div>
         <div v-else-if="status === 'pending'">
             <div class="flex flex-col justify-center items-center m-4 pb-6 space-y-2.5">
                 <UIcon name="hugeicons:loading-02" class="w-8 h-8 animate-spin" />
-                <div class="text-sm">正在加载</div>
+                <div class="text-sm">{{ $t('comment_loading') }}</div>
             </div>
         </div>
         <div class="space-y-5 pb-10" v-else>
@@ -24,7 +24,7 @@
                         <div class="ml-4 -space-y-0.5">
                             <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
                                 <div>{{ comment.user_created.first_name }}</div>
-                                <UIcon name="streamline:star-badge-solid" class="w-4 h-4 text-orange-200"
+                                <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
                                     v-if="comment.user_created.token" />
                             </div>
                             <div class="text-[0.8rem] text-gray-600 space-x-2">
@@ -37,11 +37,12 @@
                     <div class="text-gray-600 flex items-center space-x-5">
                         <Like :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
                         <UBadge v-if="authStore.user && authStore.user.id !== comment.user_created.id"
-                            :ui="{ rounded: 'rounded-lg' }" label="回复" size="sm" variant="soft" color="gray"
-                            class="cursor-pointer" @click="handleReply(comment)" />
+                            :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_reply_button')" size="sm" variant="soft"
+                            color="gray" class="cursor-pointer" @click="handleReply(comment)" />
                         <UBadge v-if="authStore.user && authStore.user.id === comment.user_created.id"
-                            :ui="{ rounded: 'rounded-lg' }" label="删除" size="sm" variant="soft" color="gray"
-                            class="cursor-pointer" @click="openDeleteModal(comment, 'comment')" />
+                            :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_delete_button')" size="sm"
+                            variant="soft" color="gray" class="cursor-pointer"
+                            @click="openDeleteModal(comment, 'comment')" />
                     </div>
                 </div>
                 <div class="ml-14">
@@ -62,7 +63,7 @@
                                 <div class="ml-4 -space-y-0.5">
                                     <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
                                         <div>{{ reply.user_created.first_name }}</div>
-                                        <UIcon name="streamline:star-badge-solid" class="w-4 h-4 text-orange-200"
+                                        <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
                                             v-if="reply.user_created.token" />
                                     </div>
                                     <div class="text-[0.8rem] text-gray-600 space-x-2">
@@ -75,8 +76,9 @@
                             <div class="text-gray-600 flex items-center space-x-5">
                                 <Like :target_id="reply.id" :user_id="authStore.user?.id" :target_type="`comment`" />
                                 <UBadge v-if="authStore.user && authStore.user.id === reply.user_created.id"
-                                    :ui="{ rounded: 'rounded-lg' }" label="删除" size="sm" variant="soft" color="gray"
-                                    class="cursor-pointer" @click="openDeleteModal(reply, 'reply')" />
+                                    :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_delete_button')" size="sm"
+                                    variant="soft" color="gray" class="cursor-pointer"
+                                    @click="openDeleteModal(reply, 'reply')" />
                             </div>
                         </div>
                         <div class="ml-14">
@@ -90,11 +92,11 @@
                         <button type="button" @click="toggleExpand(comment.id)"
                             class="text-sm text-gray-500 hover:text-gray-300">
                             <span v-if="isExpanded[comment.id]" class="flex items-center">
-                                收起回复
+                                {{ $t('comment_collapse') }}
                                 <UIcon name="hugeicons:arrow-up-01" class="w-5 h-5 ml-1" />
                             </span>
                             <span v-else class="flex items-center">
-                                展开 {{ comment.replies.length - 2 }} 条回复
+                                {{ $t('comment_expand', { replies: comment.replies.length - 2 }) }}
                                 <UIcon name="hugeicons:arrow-down-01" class="w-5 h-5 ml-1" />
                             </span>
                         </button>
@@ -104,8 +106,8 @@
 
             <!-- 显示超过半年的评论 -->
             <div v-if="showOldCommentsButton && oldComments.length > 0" class="flex justify-center pt-8">
-                <UBadge :ui="{ rounded: 'rounded-lg' }" label="已折叠部分评论" size="md" variant="soft" color="gray"
-                    class="cursor-pointer" @click="showOldComments">
+                <UBadge :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_expand_more')" size="md" variant="soft"
+                    color="gray" class="cursor-pointer" @click="showOldComments">
                     <template #trailing>
                         <UIcon name="hugeicons:arrow-down-01" class="w-5 h-5" />
                     </template>
@@ -123,7 +125,7 @@
                             <div class="ml-4 -space-y-0.5">
                                 <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
                                     <div>{{ comment.user_created.first_name }}</div>
-                                    <UIcon name="streamline:star-badge-solid" class="w-4 h-4 text-orange-200"
+                                    <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
                                         v-if="comment.user_created.token" />
                                 </div>
                                 <div class="text-[0.8rem] text-gray-600 space-x-2">
@@ -136,11 +138,12 @@
                         <div class="text-gray-600 flex items-center space-x-5">
                             <Like :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
                             <UBadge v-if="authStore.user && authStore.user.id !== comment.user_created.id"
-                                :ui="{ rounded: 'rounded-lg' }" label="回复" size="sm" variant="soft" color="gray"
-                                class="cursor-pointer" @click="handleReply(comment)" />
+                                :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_reply_button')" size="sm"
+                                variant="soft" color="gray" class="cursor-pointer" @click="handleReply(comment)" />
                             <UBadge v-if="authStore.user && authStore.user.id === comment.user_created.id"
-                                :ui="{ rounded: 'rounded-lg' }" label="删除" size="sm" variant="soft" color="gray"
-                                class="cursor-pointer" @click="openDeleteModal(comment, 'comment')" />
+                                :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_delete_button')" size="sm"
+                                variant="soft" color="gray" class="cursor-pointer"
+                                @click="openDeleteModal(comment, 'comment')" />
                         </div>
                     </div>
                     <div class="ml-14">
@@ -161,7 +164,7 @@
                                     <div class="ml-4 -space-y-0.5">
                                         <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
                                             <div>{{ reply.user_created.first_name }}</div>
-                                            <UIcon name="streamline:star-badge-solid" class="w-4 h-4 text-orange-200"
+                                            <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
                                                 v-if="reply.user_created.token" />
                                         </div>
                                         <div class="text-[0.8rem] text-gray-600 space-x-2">
@@ -172,10 +175,12 @@
                                     </div>
                                 </div>
                                 <div class="text-gray-600 flex items-center space-x-5">
-                                    <Like :target_id="reply.id" :user_id="authStore.user?.id" :target_type="`comment`" />
+                                    <Like :target_id="reply.id" :user_id="authStore.user?.id"
+                                        :target_type="`comment`" />
                                     <UBadge v-if="authStore.user && authStore.user.id === reply.user_created.id"
-                                        :ui="{ rounded: 'rounded-lg' }" label="删除" size="sm" variant="soft" color="gray"
-                                        class="cursor-pointer" @click="openDeleteModal(reply, 'reply')" />
+                                        :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_delete_button')" size="sm"
+                                        variant="soft" color="gray" class="cursor-pointer"
+                                        @click="openDeleteModal(reply, 'reply')" />
                                 </div>
                             </div>
                             <div class="ml-14">
@@ -189,11 +194,11 @@
                             <button type="button" @click="toggleExpand(comment.id)"
                                 class="text-sm text-gray-500 hover:text-gray-300">
                                 <span v-if="isExpanded[comment.id]" class="flex items-center">
-                                    收起回复
+                                    {{ $t('comment_collapse') }}
                                     <UIcon name="hugeicons:arrow-up-01" class="w-5 h-5 ml-1" />
                                 </span>
                                 <span v-else class="flex items-center">
-                                    展开 {{ comment.replies.length - 2 }} 条回复
+                                    {{ $t('comment_expand', { replies: comment.replies.length - 2 }) }}
                                     <UIcon name="hugeicons:arrow-down-01" class="w-5 h-5 ml-1" />
                                 </span>
                             </button>
@@ -206,14 +211,11 @@
         <!-- 删除确认弹窗 -->
         <UModal v-model="isDeleteModalOpen" prevent-close :transition="false">
             <div class="p-6">
-                <div class="text-lg font-medium mb-4">确认删除？</div>
-                <div class="text-sm text-gray-500 mb-6">
-                    <p>若评论下存在回复，则相关回复将一并删除。</p>
-                    <p>删除后无法恢复，请谨慎操作。</p>
-                </div>
+                <div class="text-lg font-medium mb-4">{{ $t('modal_title') }}</div>
+                <div class="text-sm text-gray-500 mb-6" v-html="$t('modal_messages')"></div>
                 <div class="flex justify-end space-x-3">
-                    <UButton label="取消" size="md" color="gray" @click="isDeleteModalOpen = false" />
-                    <UButton label="确认删除" size="md" color="red" :loading="isDeleting" :disabled="isDeleting"
+                    <UButton :label="$t('modal_cancel')" size="md" color="gray" @click="isDeleteModalOpen = false" />
+                    <UButton :label="$t('modal_confirm')" size="md" color="red" :loading="isDeleting" :disabled="isDeleting"
                         @click="confirmDelete" />
                 </div>
             </div>
@@ -307,7 +309,7 @@ onScrollToReply((ref) => {
 
 // 处理错误
 if (error.value) {
-    console.error('获取评论失败:', error.value);
+    console.error(error.value);
 }
 
 postComment((msg) => {
@@ -315,12 +317,12 @@ postComment((msg) => {
 })
 
 const handleReply = (comment: any) => {
-  if (comment && typeof comment === 'object' && 'id' in comment) {
-    const { emit: reply } = useEventBus<{ comment: any; user: any }>('reply-to-comment');
-    reply({ comment, user: comment.user_created });
-  } else {
-    console.error('Invalid comment object:', comment);
-  }
+    if (comment && typeof comment === 'object' && 'id' in comment) {
+        const { emit: reply } = useEventBus<{ comment: any; user: any }>('reply-to-comment');
+        reply({ comment, user: comment.user_created });
+    } else {
+        console.error('Invalid comment object:', comment);
+    }
 };
 
 // 添加展开/折叠状态管理
@@ -391,7 +393,7 @@ const confirmDelete = async () => {
         isDeleteModalOpen.value = false;
         refresh();
     } catch (error) {
-        console.error('删除失败:', error);
+        console.error(error);
     } finally {
         isDeleting.value = false; // 结束删除，恢复按钮状态
     }

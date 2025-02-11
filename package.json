@@ -13,6 +13,7 @@
   "dependencies": {
     "@directus/sdk": "^19.0.1",
     "@nuxt/ui": "^2.21.0",
+    "@nuxtjs/i18n": "^9.2.0",
     "@pinia/nuxt": "^0.9.0",
     "@vueuse/nuxt": "^12.5.0",
     "canvas-confetti": "^1.9.3",

@@ -2,8 +2,8 @@
     <div>
         <div v-if="status === 'error'">
             <div class="flex justify-center items-center h-96">
-                <UAlert icon="hugeicons:alert-02" color="red" variant="soft" title="发生错误"
-                    description="访问受限或因页面不存在导致无法访问。" />
+                <UAlert icon="hugeicons:alert-02" color="red" variant="soft" :title="$t('alert_error_title')"
+                    :description="$t('alert_error_description')" />
             </div>
         </div>
         <div v-else>
@@ -14,15 +14,15 @@
                     <div class="flex items-center space-x-0 sm:space-x-4">
                         <UBadge variant="solid" color="white"
                             class="select-none pointer-events-none opacity-70 hidden sm:block">{{
-                                post?.tag && post?.tag.name ? post?.tag.name : 'AI 创作' }}</UBadge>
+                                post?.tag && post?.tag.name ? post?.tag.name : $t('post_tag_ai') }}</UBadge>
 
                         <div class="items-center flex">
-                            {{ useFormatDate(post?.date_created) }}发布
+                            {{ useFormatDate(post?.date_created) }}{{ $t('post_published') }}
                             <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600 mx-1" />
-                            阅读约需 {{ useReadingTime(post?.content) }}
+                            {{ $t('common_readingtime') }} {{ useReadingTime(post?.content) }}
                         </div>
                     </div>
-                    <div v-if="post?.date_updated">{{ useFormatDate(post?.date_updated) }}更新</div>
+                    <div v-if="post?.date_updated">{{ useFormatDate(post?.date_updated) }}{{ $t('post_updated') }}</div>
                 </div>
 
                 <div class="flex flex-row items-center space-x-10" v-if="post?.authors?.length">
@@ -41,8 +41,9 @@
                     </div>
                 </div>
 
-                <UAlert icon="hugeicons:alert-02" color="primary" variant="soft" class="mt-6" title="AI 创作内容提示"
-                    description="内容仅供参考，虽已尽力确保准确可靠，仍建议结合其他来源进一步验证。" v-if="!post?.tag" />
+                <UAlert icon="hugeicons:alert-02" color="primary" variant="soft" class="mt-6"
+                    :title="$t('alert_error_ai_title')" :description="$t('alert_error_ai_description')"
+                    v-if="!post?.tag" />
 
                 <div class="space-y-6 mt-6">
                     <div v-if="post?.github_link" class="my-6">
@@ -77,7 +78,8 @@
                 </div>
 
                 <div v-else>
-                    <UDivider label="本页面禁止发表评论" :ui="{ label: 'text-gray-500' }" type="dashed" class="py-1" />
+                    <UDivider :label="$t('comment_is_closed')" :ui="{ label: 'text-gray-500' }" type="dashed"
+                        class="py-1" />
                     <div class="flex justify-center items-center mt-8 pb-6 space-y-4">
                         <UIcon name="hugeicons:comment-block-02" class="w-12 h-12 text-gray-800" />
                     </div>
@@ -88,9 +90,10 @@
 </template>
 
 <script lang="ts" setup>
-const { $directus, $readItem } = useNuxtApp()
-const route = useRoute()
+const { $directus, $readItem } = useNuxtApp();
+const route = useRoute();
 const authStore = useAuthStore();
+const { t } = useI18n();
 
 // 监听 updated 事件
 const { on: onUpdated } = useEventBus<string>('updated');
@@ -113,6 +116,6 @@ onUpdated((msg) => {
 });
 
 useSeoMeta({
-    title: computed(() => post.value?.title || 'Eric'),
+    title: computed(() => post.value?.title || t('common_home')),
 })
 </script>

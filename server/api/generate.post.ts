@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
     return JSON.parse(jsonContent);
   } catch (error: any) {
     throw createError({
-      message: `生成失败: ${error.message}`,
+      message: error.message,
     });
   }
 });

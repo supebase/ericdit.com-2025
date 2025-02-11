@@ -1,10 +1,12 @@
 <template>
     <div v-if="props.isHome" class="flex items-center space-x-2">
-        <UIcon :name="props.allowComment ? `hugeicons:comment-02` : `hugeicons:comment-block-02`" class="w-4 h-4 text-gray-500" />
+        <UIcon :name="props.allowComment ? `hugeicons:comment-02` : `hugeicons:comment-block-02`"
+            class="w-4 h-4 text-gray-500" />
         <span class="text-sm text-gray-500 git-nums">{{ props.allowComment ? comments?.length || 0 : '' }}</span>
     </div>
     <div v-else class="mt-4">
-        <UDivider :label="!comments?.length ? `评论区空空如也，快来留下足迹！` : `已有 ${comments?.length || 0} 条评论，快来加入讨论！`"
+        <UDivider
+            :label="!comments?.length ? $t('comment_is_empty') : $t('comment_counter', { counter: comments?.length || 0 })"
             :ui="{ label: 'text-gray-500' }" type="dashed" class="py-1" />
     </div>
 </template>
@@ -44,6 +46,6 @@ const { data: comments, error } = await useAsyncData(`comments-${props.post_id}`
 
 // 处理错误
 if (error.value) {
-    console.error('获取评论失败:', error.value);
+    console.error(error.value);
 }
 </script>
