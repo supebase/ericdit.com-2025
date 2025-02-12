@@ -84,8 +84,9 @@ export default defineNuxtConfig({
   },
 
   icon: {
+    provider: "server",
     serverBundle: {
-      collections: ["hugeicons", "streamline"],
+      collections: ["ri", "hugeicons", "streamline"],
     },
   },
 
@@ -98,7 +99,13 @@ export default defineNuxtConfig({
 
   i18n: {
     vueI18n: './i18n.config.ts',
-    locales: ['cn'],
+    locales: ['cn', 'en'],
     defaultLocale: "cn",
+
+    customRoutes: 'config',
+    pages: {
+      index: false,
+      'id': false
+    }
   }
 });

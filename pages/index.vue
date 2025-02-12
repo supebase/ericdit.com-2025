@@ -17,8 +17,7 @@
         </div>
         <div :class="`swiper featured-slider featured-slider-${group.year}`">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="post in group.posts" :key="post.id"
-              :class="{ 'cube rounded-lg': !post.tag }">
+            <div class="swiper-slide" v-for="post in group.posts" :key="post.id">
               <article class="card card-post">
                 <div class="card-header">
                   <NuxtLink :href="post.id" class="card-title truncate text-gray-100" tabindex="-1">{{ post.title }}

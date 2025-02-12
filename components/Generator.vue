@@ -1,6 +1,6 @@
 <template>
     <div @click="isOpen = true">
-        <UIcon name="hugeicons:edit-01" class="cursor-pointer h-7 w-7 text-orange-200 mt-1.5" />
+        <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-orange-200 mt-1.5" />
     </div>
 
     <UModal v-model="isOpen" prevent-close :ui="{
@@ -12,7 +12,7 @@
         <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-800' }">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <UIcon name="hugeicons:edit-01" class="cursor-pointer h-6 w-6 text-orange-200" />
+                    <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-orange-200" />
                     <UButton color="gray" variant="ghost" icon="ri:close-line" class="-my-1" tabindex="-1"
                         @click="isOpen = false" />
                 </div>
