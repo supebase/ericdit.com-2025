@@ -24,16 +24,7 @@
                   </NuxtLink>
                   <div class="card-meta mt-2.5 flex items-center">
                     <time class="card-date">
-                      <UTooltip v-if="post.date_updated"
-                        :popper="{ arrow: true, placement: 'left', offsetDistance: 12 }">
-                        <div class="text-gray-500 text-[13px] select-none cursor-help">
-                          {{ useFormatDate(post.date_created) }}
-                        </div>
-                        <template #text>
-                          <span>{{ useFormatDate(post.date_updated) }}{{ $t('post_updated') }}</span>
-                        </template>
-                      </UTooltip>
-                      <div v-else class="text-gray-500 text-[13px] select-none">
+                      <div class="text-gray-500 text-[13px] select-none">
                         {{ useFormatDate(post.date_created) }}
                       </div>
                     </time>

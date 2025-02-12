@@ -161,14 +161,14 @@ export default defineI18nConfig(() => ({
             common_lastyear: 'Last year',
             common_time_past: '{n} ago',
             common_time_future: 'In {n}',
-            common_time_month: '{n} month(s)',
-            common_time_year: '{n} year(s)',
-            common_time_day: '{n} day(s)',
-            common_time_week: '{n} week(s)',
-            common_time_hour: '{n} hour(s)',
-            common_time_minute: '{n} minute(s)',
-            common_time_second: '{n} second(s)',
-            common_readingtime: 'Reading time:',
+            common_time_year: '{n} year',
+            common_time_month: '{n} month',
+            common_time_day: '{n} day',
+            common_time_week: '{n} week',
+            common_time_hour: '{n} hour',
+            common_time_minute: '{n} minute',
+            common_time_second: '{n} second',
+            common_readingtime: '',
             common_readingtime_minute: ' min',
 
             post_published: '',
@@ -229,7 +229,7 @@ export default defineI18nConfig(() => ({
 
             build: '2001 - Present',
             build_author_info: 'Created by Eric',
-            build_datetime: 'Project built on',
+            build_datetime: 'Built on',
             build_version_unknow: 'Unknown version',
         }
     }

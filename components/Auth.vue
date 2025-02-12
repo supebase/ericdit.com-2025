@@ -5,7 +5,12 @@
         :ui="{ background: 'dark:bg-gray-900', icon: { size: { sm: 'h-5 w-5' } } }" />
     </div>
 
-    <UModal v-model="isOpen" prevent-close :ui="{ width: 'w-full sm:max-w-sm' }">
+    <UModal v-model="isOpen" prevent-close :ui="{
+      width: 'w-full sm:max-w-sm', base: 'absolute top-0', transition: {
+        enterFrom: '-translate-y-4',
+        leaveTo: '-translate-y-4'
+      }
+    }">
       <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-800' }">
         <div>
           <UTabs v-model="activeTab" :items="items" class="w-full">
@@ -83,7 +88,7 @@ const activeTab = ref(0);
 const emailInput = ref();
 const emailSignupInput = ref();
 
-const items = [{
+const items = computed(() => [{
   key: 'login',
   label: t('auth_login'),
   description: t('auth_login_info'),
@@ -91,7 +96,7 @@ const items = [{
   key: 'register',
   label: t('auth_register'),
   description: t('auth_register_info'),
-}]
+}])
 
 // 表单数据和状态管理
 const email = ref('');

@@ -1,6 +1,11 @@
 <template>
     <div @click="isOpen = true">
-        <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-orange-200 mt-1.5" />
+        <UTooltip :popper="{ arrow: true, placement: 'bottom', offsetDistance: 12 }">
+            <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-orange-200 mt-2" />
+            <template #text>
+                <span>{{ $t('ai_generator_start') }}</span>
+            </template>
+        </UTooltip>
     </div>
 
     <UModal v-model="isOpen" prevent-close :ui="{

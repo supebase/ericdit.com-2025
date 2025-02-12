@@ -8,44 +8,56 @@ export function useFormatDate(date: Date | string | number, customMessages: Cust
     }
 
     const timeAgo = useTimeAgo(date);
-    const { t } = useI18n();
+    const { t, locale } = useI18n(); // Retrieve current locale
+
+    const isEnglish = locale.value === 'en';
 
     const messages: CustomMessages = {
         justNow: t('common_justnow'),
-        past: (n: string) => t('common_time_past', { n }), // 使用插值
-        future: (n: string) => t('common_time_future', { n }), // 使用插值
+        past: (n: string) => t('common_time_past', { n }),
+        future: (n: string) => t('common_time_future', { n }),
         month: (n: string, past: boolean) =>
             past
-                ? t('common_time_past', { n: t('common_time_month', { n }) }) // 例如：3 个月前
-                : t('common_time_future', { n: t('common_time_month', { n }) }), // 例如：3 个月后
+                ? t('common_time_past', { n: t('common_time_month', { n }) })
+                : t('common_time_future', { n: t('common_time_month', { n }) }),
         year: (n: string, past: boolean) =>
             past
-                ? t('common_time_past', { n: t('common_time_year', { n }) }) // 例如：2 年前
-                : t('common_time_future', { n: t('common_time_year', { n }) }), // 例如：2 年后
+                ? t('common_time_past', { n: t('common_time_year', { n }) })
+                : t('common_time_future', { n: t('common_time_year', { n }) }),
         day: (n: string, past: boolean) =>
             past
-                ? t('common_time_past', { n: t('common_time_day', { n }) }) // 例如：5 天前
-                : t('common_time_future', { n: t('common_time_day', { n }) }), // 例如：5 天后
+                ? t('common_time_past', { n: t('common_time_day', { n }) })
+                : t('common_time_future', { n: t('common_time_day', { n }) }),
         week: (n: string, past: boolean) =>
             past
-                ? t('common_time_past', { n: t('common_time_week', { n }) }) // 例如：1 周前
-                : t('common_time_future', { n: t('common_time_week', { n }) }), // 例如：1 周后
+                ? t('common_time_past', { n: t('common_time_week', { n }) })
+                : t('common_time_future', { n: t('common_time_week', { n }) }),
         hour: (n: string, past: boolean) =>
             past
-                ? t('common_time_past', { n: t('common_time_hour', { n }) }) // 例如：2 小时前
-                : t('common_time_future', { n: t('common_time_hour', { n }) }), // 例如：2 小时后
+                ? t('common_time_past', { n: t('common_time_hour', { n }) })
+                : t('common_time_future', { n: t('common_time_hour', { n }) }),
         minute: (n: string, past: boolean) =>
             past
-                ? t('common_time_past', { n: t('common_time_minute', { n }) }) // 例如：10 分钟前
-                : t('common_time_future', { n: t('common_time_minute', { n }) }), // 例如：10 分钟后
+                ? t('common_time_past', { n: t('common_time_minute', { n }) })
+                : t('common_time_future', { n: t('common_time_minute', { n }) }),
         second: (n: string, past: boolean) =>
             past
-                ? t('common_time_past', { n: t('common_time_second', { n }) }) // 例如：30 秒前
-                : t('common_time_future', { n: t('common_time_second', { n }) }), // 例如：30 秒后
+                ? t('common_time_past', { n: t('common_time_second', { n }) })
+                : t('common_time_future', { n: t('common_time_second', { n }) }),
         yesterday: t('common_yesterday'),
         lastWeek: t('common_lastweak'),
         lastMonth: t('common_lastmonth'),
         lastYear: t('common_lastyear'),
+        // Adjust plural forms for English
+        ...(isEnglish ? {
+            second_plural: (n: string) => t('common_time_second', { n }) + 's', // e.g., "2 seconds"
+            minute_plural: (n: string) => t('common_time_minute', { n }) + 's', // e.g., "5 minutes"
+            hour_plural: (n: string) => t('common_time_hour', { n }) + 's', // e.g., "3 hours"
+            day_plural: (n: string) => t('common_time_day', { n }) + 's', // e.g., "7 days"
+            week_plural: (n: string) => t('common_time_week', { n }) + 's', // e.g., "4 weeks"
+            month_plural: (n: string) => t('common_time_month', { n }) + 's', // e.g., "6 months"
+            year_plural: (n: string) => t('common_time_year', { n }) + 's', // e.g., "2 years"
+        } : {}),
         ...customMessages,
     };
 
@@ -58,8 +70,16 @@ export function useFormatDate(date: Date | string | number, customMessages: Cust
                 if (match === 'last week') return messages.lastWeek as string;
                 if (match === 'last month') return messages.lastMonth as string;
                 if (match === 'last year') return messages.lastYear as string;
-                if (p1 && p2) return (messages[p2] as (n: string, past: boolean) => string)(p1, true);
-                if (p3 && p4) return (messages[p4] as (n: string, past: boolean) => string)(p3, false);
+                if (p1 && p2) {
+                    // Handle pluralization for English
+                    if (isEnglish && parseInt(p1) > 1) {
+                        return (messages[`${p2}_plural`] as (n: string) => string)(p1) + ' ago'; // Handle plural
+                    }
+                    return (messages[p2] as (n: string, past: boolean) => string)(p1, true); // Singular case
+                }
+                if (p3 && p4) {
+                    return (messages[p4] as (n: string, past: boolean) => string)(p3, false); // Future case
+                }
                 return match;
             }
         )

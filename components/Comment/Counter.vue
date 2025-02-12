@@ -1,7 +1,7 @@
 <template>
     <div v-if="props.isHome" class="flex items-center space-x-2">
         <UIcon :name="props.allowComment ? `hugeicons:comment-02` : `hugeicons:comment-block-02`"
-            class="w-4 h-4 text-gray-500" />
+            class="w-5 h-5 text-gray-500" />
         <span class="text-sm text-gray-500 git-nums">{{ props.allowComment ? comments?.length || 0 : '' }}</span>
     </div>
     <div v-else class="mt-4">
