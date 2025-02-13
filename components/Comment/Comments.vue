@@ -1,9 +1,9 @@
 <template>
     <div>
         <div v-if="!comments || comments?.length === 0">
-            <div class="flex flex-col justify-center items-center m-4 pb-6 space-y-4">
+            <div class="flex flex-col justify-center items-center mt-8 pb-6 space-y-4">
                 <UIcon name="hugeicons:comment-01" class="w-12 h-12 text-gray-800" />
-                <div class="text-sm">{{ $t('comment_welcome') }}</div>
+                <!-- <div class="text-sm">{{ $t('comment_welcome') }}</div> -->
             </div>
         </div>
         <div v-else-if="status === 'pending'">
@@ -18,18 +18,18 @@
                 <!-- 评论内容 -->
                 <div class="flex flex-row justify-between items-center">
                     <div class="group flex items-center">
+                        <UChip inset :show="comment.user_created.token ? true : false">
                         <UAvatar size="md"
                             :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                             :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
+                        </UChip>
                         <div class="ml-4">
                             <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                 <div>{{ comment.user_created.first_name }}</div>
-                                <UBadge variant="solid" size="xs" color="white" label="A" class="select-none opacity-70"
-                                    v-if="comment.user_created.token"></UBadge>
                             </div>
-                            <div class="text-[0.8rem] text-gray-600 space-x-2">
+                            <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
                                 <span>{{ useFormatDate(comment.date_created) }}</span>
-                                <span>&bull;</span>
+                                <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
                                 <span>{{ comment.user_created.location }}</span>
                             </div>
                         </div>
@@ -57,18 +57,18 @@
                         :key="reply.id" class="space-y-1">
                         <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
                             <div class="group flex items-center">
+                                <UChip inset :show="reply.user_created.token ? true : false">
                                 <UAvatar size="md"
                                     :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                                     :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
+                                </UChip>
                                 <div class="ml-4">
                                     <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                         <div>{{ reply.user_created.first_name }}</div>
-                                        <UBadge variant="solid" size="xs" color="white" label="A"
-                                            class="select-none opacity-70" v-if="reply.user_created.token"></UBadge>
                                     </div>
-                                    <div class="text-[0.8rem] text-gray-600 space-x-2">
+                                    <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
                                         <span>{{ useFormatDate(reply.date_created) }}</span>
-                                        <span>&bull;</span>
+                                        <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
                                         <span>{{ reply.user_created.location }}</span>
                                     </div>
                                 </div>
@@ -106,12 +106,8 @@
 
             <!-- 显示超过半年的评论 -->
             <div v-if="showOldCommentsButton && oldComments.length > 0" class="flex justify-center pt-8">
-                <UBadge :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_expand_more')" size="md" variant="soft"
-                    color="gray" class="cursor-pointer" @click="showOldComments">
-                    <template #trailing>
-                        <UIcon name="hugeicons:arrow-down-01" class="w-5 h-5" />
-                    </template>
-                </UBadge>
+                <UBadge :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_expand_more')" size="md" variant="solid"
+                    color="black" class="cursor-pointer" @click="showOldComments"></UBadge>
             </div>
 
             <div v-if="showOldCommentsSection">
@@ -119,18 +115,18 @@
                     <!-- 评论内容 -->
                     <div class="flex flex-row justify-between items-center">
                         <div class="group flex items-center">
+                            <UChip inset :show="comment.user_created.token ? true : false">
                             <UAvatar size="md"
                                 :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                                 :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
+                            </UChip>
                             <div class="ml-4">
                                 <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                     <div>{{ comment.user_created.first_name }}</div>
-                                    <UBadge variant="solid" size="xs" color="white" label="A"
-                                        class="select-none opacity-70" v-if="comment.user_created.token"></UBadge>
                                 </div>
-                                <div class="text-[0.8rem] text-gray-600 space-x-2">
+                                <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
                                     <span>{{ useFormatDate(comment.date_created) }}</span>
-                                    <span>&bull;</span>
+                                    <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
                                     <span>{{ comment.user_created.location }}</span>
                                 </div>
                             </div>
@@ -158,18 +154,18 @@
                             :key="reply.id" class="space-y-1">
                             <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
                                 <div class="group flex items-center">
+                                    <UChip inset :show="reply.user_created.token ? true : false">
                                     <UAvatar size="md"
                                         :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                                         :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
+                                    </UChip>
                                     <div class="ml-4">
                                         <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                             <div>{{ reply.user_created.first_name }}</div>
-                                            <UBadge variant="solid" size="xs" color="white" label="A"
-                                                class="select-none opacity-70" v-if="reply.user_created.token"></UBadge>
                                         </div>
-                                        <div class="text-[0.8rem] text-gray-600 space-x-2">
+                                        <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
                                             <span>{{ useFormatDate(reply.date_created) }}</span>
-                                            <span>&bull;</span>
+                                            <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
                                             <span>{{ reply.user_created.location }}</span>
                                         </div>
                                     </div>

@@ -69,8 +69,8 @@
             <div class="my-8 text-base text-gray-600 space-y-8">
 
                 <div v-if="post?.allowComment">
-                    <div v-if="authStore.user" class="py-4">
-                        <CommentForm :post_id="post?.id" :user_id="authStore.user.id" />
+                    <div class="py-4">
+                        <CommentForm :post_id="post?.id" :user_id="authStore.user?.id || ''" />
                     </div>
 
                     <CommentCounter :post_id="post?.id" />

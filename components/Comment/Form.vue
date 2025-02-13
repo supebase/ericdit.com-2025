@@ -3,21 +3,22 @@
         <form @submit.prevent="handlePostComment">
             <div class="ring-2 ring-gray-800 bg-gray-950 rounded-lg p-3"
                 :class="{ 'ring-red-500': isCommentExceedLimit, '!ring-gray-700 !bg-gray-900': isReplying }">
-                <UTextarea ref="commentInput" color="white" variant="none" :placeholder="randomPlaceholder" autoresize
+                <UTextarea ref="commentInput" color="white" variant="none" :placeholder="!props.user_id ? $t('comment_not_login') : randomPlaceholder" autoresize
                     :rows="2" :padded="false" v-model="comment" class="text-gray-300"
-                    :class="{ 'ring-red-500': isCommentExceedLimit }" @input="handleInput" :maxlength="300" required />
+                    :class="{ 'ring-red-500': isCommentExceedLimit }" @input="handleInput" :maxlength="300" :disabled="!props.user_id" required />
                 <div class="flex justify-between items-center pt-1">
-                    <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-4" :class="!props.user_id ? 'hidden' : ''">
                         <Emoji @emoji="handleEmojiInsert" />
                         <div class="text-sm text-gray-700 flex items-center space-x-1.5">
                             <UIcon name="streamline:markdown-circle-programming" class="w-[18px] h-[18px]" />
                             <div>{{ $t('comment_markdown') }}</div>
                         </div>
                     </div>
+                    <div :class="!props.user_id ? '' : 'hidden'"></div>
 
                     <div class="space-x-5 flex items-center">
                         <!-- 动态绑定字数统计的颜色 -->
-                        <span class="text-sm"
+                        <span class="text-sm select-none"
                             :class="{ 'text-gray-600': !isCommentExceedLimit, 'text-red-500': isCommentExceedLimit }">
                             {{ comment.length }} / 300
                         </span>

@@ -24,7 +24,7 @@
             </template>
 
             <div class="flex flex-col items-center">
-                <UInput icon="hugeicons:text-circle" size="lg" color="white" :trailing="false"
+                <UInput icon="hugeicons:text-square" size="lg" color="white" :trailing="false"
                     :placeholder="$t('ai_generator_info')" type="text" class="w-full" v-model="keywords" />
             </div>
 

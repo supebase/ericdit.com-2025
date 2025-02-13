@@ -85,7 +85,8 @@ export default defineI18nConfig(() => ({
             comment_reply_to: '回复：',
             comment_expand: '展开 {replies} 条回复',
             comment_collapse: '收起回复',
-            comment_expand_more: '已折叠部分评论',
+            comment_expand_more: '折叠部分评论',
+            comment_not_login: '请先登录后再发表评论',
 
             like_error_login_msg: '请先登录后在进行操作',
             like_error_repeat_msg: '已经点过赞了，请不要重复。',
@@ -201,6 +202,7 @@ export default defineI18nConfig(() => ({
             comment_expand: 'Expand {replies} replies',
             comment_collapse: 'Collapse replies',
             comment_expand_more: 'More replies hidden',
+            comment_not_login: 'Please log in before commenting',
 
             like_error_login_msg: 'Please login first',
             like_error_repeat_msg: 'Already liked',

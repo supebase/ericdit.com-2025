@@ -1,10 +1,11 @@
 <template>
     <div class="my-8">
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center items-center space-x-4">
             <div class="relative w-5 h-5 text-gray-300 cursor-pointer" @click="toggleLocale">
                 <UIcon name="ri:translate" class="w-5 h-5 transition-transform duration-300 ease-in-out"
                     :class="{ 'scale-x-0': isFlipping, '-scale-x-100': currentLocale === 'en' }" />
             </div>
+            <UIcon name="ri:github-fill" class="w-5 h-5 text-gray-300 cursor-pointer" />
         </div>
 
         <div class="flex flex-col justify-center items-center h-16 text-gray-600 space-y-1.5 text-[13px]">
