@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 const { $directus, $createItem } = useNuxtApp();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const { showNotification } = useNotification();
 
 // 定义 props
@@ -57,21 +57,33 @@ const replyingToUser = ref("")
 const replyingToCommentId = ref("")
 
 // 定义提示语数组
-const placeholders = [
+const placeholders = ref([
     t('comment_placeholders_1'),
     t('comment_placeholders_2'),
     t('comment_placeholders_3'),
     t('comment_placeholders_4'),
     t('comment_placeholders_5'),
     t('comment_placeholders_6'),
-];
+]);
 
 const randomPlaceholder = ref("");
 
 // 随机生成 placeholder 的逻辑
 const generateRandomPlaceholder = () => {
-    randomPlaceholder.value = placeholders[Math.floor(Math.random() * placeholders.length)];
+    randomPlaceholder.value = placeholders.value[Math.floor(Math.random() * placeholders.value.length)];
 };
+
+watch(locale, () => {
+    placeholders.value = [
+        t('comment_placeholders_1'),
+        t('comment_placeholders_2'),
+        t('comment_placeholders_3'),
+        t('comment_placeholders_4'),
+        t('comment_placeholders_5'),
+        t('comment_placeholders_6'),
+    ];
+    generateRandomPlaceholder(); // 语言切换后重新生成随机提示语
+});
 
 // 组件挂载时生成随机 placeholder
 onMounted(() => {
@@ -204,7 +216,7 @@ const cancelReply = () => {
     isReplying.value = false;
     replyingToUser.value = "";
     replyingToCommentId.value = "";
-    randomPlaceholder.value = placeholders[Math.floor(Math.random() * placeholders.length)]; // 恢复原始 placeholder
+    randomPlaceholder.value = placeholders.value[Math.floor(Math.random() * placeholders.value.length)]; // 恢复原始 placeholder
 };
 
 onDeactivated(() => {

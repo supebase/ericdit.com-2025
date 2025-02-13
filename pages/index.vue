@@ -38,7 +38,7 @@
                   {{ post.summary }}
                 </div>
                 <div class="card-footer flex items-center justify-between">
-                  <UBadge variant="solid" color="white" class="select-none opacity-70">{{
+                  <UBadge variant="solid" size="md" color="white" class="select-none opacity-70">{{
                     post.tag ? post.tag.name : $t('post_tag_ai') }}</UBadge>
                   <CommentCounter :post_id="post.id" :isHome="true" :allowComment="post.allowComment" />
                 </div>

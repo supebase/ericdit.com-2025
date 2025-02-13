@@ -14,18 +14,18 @@
         </div>
         <div class="space-y-5 pb-10" v-else>
             <!-- 显示未超过半年的评论 -->
-            <div v-for="(comment, index) in recentComments" :key="comment.id" class="relative my-6">
+            <div v-for="(comment, index) in recentComments" :key="comment.id" class="relative my-6 space-y-1">
                 <!-- 评论内容 -->
                 <div class="flex flex-row justify-between items-center">
                     <div class="group flex items-center">
                         <UAvatar size="md"
                             :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                             :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
-                        <div class="ml-4 -space-y-0.5">
-                            <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
+                        <div class="ml-4">
+                            <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                 <div>{{ comment.user_created.first_name }}</div>
-                                <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
-                                    v-if="comment.user_created.token" />
+                                <UBadge variant="solid" size="xs" color="white" label="A" class="select-none opacity-70"
+                                    v-if="comment.user_created.token"></UBadge>
                             </div>
                             <div class="text-[0.8rem] text-gray-600 space-x-2">
                                 <span>{{ useFormatDate(comment.date_created) }}</span>
@@ -54,17 +54,17 @@
                 <div v-if="comment.replies && comment.replies.length > 0" class="ml-12 mt-7 space-y-8">
                     <div class="absolute left-5 top-14 bottom-2 border-l border-dashed border-gray-800"></div>
                     <div v-for="(reply, replyIndex) in comment.replies.slice(0, isExpanded[comment.id] ? comment.replies.length : 2)"
-                        :key="reply.id">
+                        :key="reply.id" class="space-y-1">
                         <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
                             <div class="group flex items-center">
                                 <UAvatar size="md"
                                     :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                                     :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
-                                <div class="ml-4 -space-y-0.5">
-                                    <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
+                                <div class="ml-4">
+                                    <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                         <div>{{ reply.user_created.first_name }}</div>
-                                        <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
-                                            v-if="reply.user_created.token" />
+                                        <UBadge variant="solid" size="xs" color="white" label="A"
+                                            class="select-none opacity-70" v-if="reply.user_created.token"></UBadge>
                                     </div>
                                     <div class="text-[0.8rem] text-gray-600 space-x-2">
                                         <span>{{ useFormatDate(reply.date_created) }}</span>
@@ -115,18 +115,18 @@
             </div>
 
             <div v-if="showOldCommentsSection">
-                <div v-for="(comment, index) in oldComments" :key="comment.id" class="relative my-6">
+                <div v-for="(comment, index) in oldComments" :key="comment.id" class="relative my-6 space-y-1">
                     <!-- 评论内容 -->
                     <div class="flex flex-row justify-between items-center">
                         <div class="group flex items-center">
                             <UAvatar size="md"
                                 :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                                 :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
-                            <div class="ml-4 -space-y-0.5">
-                                <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
+                            <div class="ml-4">
+                                <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                     <div>{{ comment.user_created.first_name }}</div>
-                                    <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
-                                        v-if="comment.user_created.token" />
+                                    <UBadge variant="solid" size="xs" color="white" label="A"
+                                        class="select-none opacity-70" v-if="comment.user_created.token"></UBadge>
                                 </div>
                                 <div class="text-[0.8rem] text-gray-600 space-x-2">
                                     <span>{{ useFormatDate(comment.date_created) }}</span>
@@ -155,17 +155,17 @@
                     <div v-if="comment.replies && comment.replies.length > 0" class="ml-12 mt-7 space-y-8">
                         <div class="absolute left-5 top-14 bottom-2 border-l border-dashed border-gray-800"></div>
                         <div v-for="(reply, replyIndex) in comment.replies.slice(0, isExpanded[comment.id] ? comment.replies.length : 2)"
-                            :key="reply.id">
+                            :key="reply.id" class="space-y-1">
                             <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
                                 <div class="group flex items-center">
                                     <UAvatar size="md"
                                         :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
                                         :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
-                                    <div class="ml-4 -space-y-0.5">
-                                        <div class="flex items-center text-base font-medium text-gray-200 space-x-2">
+                                    <div class="ml-4">
+                                        <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
                                             <div>{{ reply.user_created.first_name }}</div>
-                                            <UIcon name="heroicons:check-badge-20-solid" class="w-4 h-4 text-orange-200"
-                                                v-if="reply.user_created.token" />
+                                            <UBadge variant="solid" size="xs" color="white" label="A"
+                                                class="select-none opacity-70" v-if="reply.user_created.token"></UBadge>
                                         </div>
                                         <div class="text-[0.8rem] text-gray-600 space-x-2">
                                             <span>{{ useFormatDate(reply.date_created) }}</span>
@@ -215,8 +215,8 @@
                 <div class="text-sm text-gray-500 mb-6" v-html="$t('modal_messages')"></div>
                 <div class="flex justify-end space-x-3">
                     <UButton :label="$t('modal_cancel')" size="md" color="gray" @click="isDeleteModalOpen = false" />
-                    <UButton :label="$t('modal_confirm')" size="md" color="red" :loading="isDeleting" :disabled="isDeleting"
-                        @click="confirmDelete" />
+                    <UButton :label="$t('modal_confirm')" size="md" color="red" :loading="isDeleting"
+                        :disabled="isDeleting" @click="confirmDelete" />
                 </div>
             </div>
         </UModal>
