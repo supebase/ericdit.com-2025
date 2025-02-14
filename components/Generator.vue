@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $createItem } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 const authStore = useAuthStore();
 const { t } = useI18n();
 const { showNotification } = useNotification();
@@ -87,7 +87,7 @@ const callGenerateAPI = async (): Promise<ArticleData> => {
 
 const submitArticle = async (content: ArticleData) => {
     await $directus.request(
-        $createItem('posts', {
+        $content.createItem('posts', {
             title: content.title,
             summary: content.summary,
             content: content.content,

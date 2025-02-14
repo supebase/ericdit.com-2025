@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-const { $authClient, $readFile, $uploadFiles, $deleteFile, $updateUser, $readMe } = useNuxtApp();
+const { $authClient, $user, $file } = useNuxtApp();
 const authStore = useAuthStore();
 const { t } = useI18n();
 
@@ -81,11 +81,11 @@ const uploadAvatar = async () => {
     try {
         // 如果用户已经有头像，先删除旧头像
         if (currentAvatarId.value) {
-            await $authClient.request($deleteFile(currentAvatarId.value));
+            await $authClient.request($file.deleteFile(currentAvatarId.value));
         }
 
         // 上传新头像
-        const uploadResponse = await $authClient.request($uploadFiles(formData));
+        const uploadResponse = await $authClient.request($file.uploadFiles(formData));
 
         // 确保 uploadResponse 是一个对象，并且包含文件信息
         if (uploadResponse && uploadResponse.id) {
@@ -93,10 +93,10 @@ const uploadAvatar = async () => {
 
             // 更新用户记录中的头像字段
             await $authClient.request(
-                $updateUser(authStore.user?.id || '', { avatar: fileId }) // 假设 currentUserId 是当前用户的 ID
+                $user.updateUser(authStore.user?.id || '', { avatar: fileId }) // 假设 currentUserId 是当前用户的 ID
             );
 
-            const updatedUser = await $authClient.request($readMe({ fields: ['id', 'email', 'first_name', 'avatar', 'token', 'location'] })) as User;
+            const updatedUser = await $authClient.request($user.readMe({ fields: ['id', 'email', 'first_name', 'avatar', 'token', 'location'] })) as User;
             authStore.setUser(updatedUser);
 
             // 更新当前头像信息
@@ -125,7 +125,7 @@ const deleteAvatar = async () => {
 
     try {
         // 删除 Directus 中的文件记录
-        await $authClient.request($deleteFile(currentAvatarId.value));
+        await $authClient.request($file.deleteFile(currentAvatarId.value));
 
         // 清空当前头像信息
         currentAvatarId.value = null;
@@ -133,10 +133,10 @@ const deleteAvatar = async () => {
 
         // 更新用户记录中的头像字段
         await $authClient.request(
-            $updateUser(authStore.user?.id || '', { avatar: null })
+            $user.updateUser(authStore.user?.id || '', { avatar: null })
         );
 
-        const updatedUser = await $authClient.request($readMe({ fields: ['id', 'email', 'first_name', 'avatar'] })) as User;
+        const updatedUser = await $authClient.request($user.readMe({ fields: ['id', 'email', 'first_name', 'avatar'] })) as User;
         authStore.setUser(updatedUser);
     } catch (error) {
         showNotification('avatar-error-delete', 'error', t('avatar_error_delete_msg'));
@@ -152,7 +152,7 @@ const fetchCurrentAvatar = async () => {
         const avatarId = authStore.user?.avatar;
         if (avatarId) {
             isLoading.value = true;
-            const avatarResponse = await $authClient.request($readFile(avatarId, { fields: ['*'] }));
+            const avatarResponse = await $authClient.request($file.readFile(avatarId, { fields: ['*'] }));
 
             // 更新当前头像信息
             currentAvatarId.value = avatarResponse.id;

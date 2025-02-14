@@ -27,13 +27,13 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $readItems } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 const { public: { buildTime } } = useRuntimeConfig();
 const { t, setLocale, locale } = useI18n();
 
 const { data: links } = await useAsyncData('links', () => {
     return $directus.request(
-        $readItems('links', {
+        $content.readItems('links', {
             fields: ['*.*'],
             sort: ['sort'],
             filter: { status: 'published' },

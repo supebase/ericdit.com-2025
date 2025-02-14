@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-const { $authClient, $registerUser, $readMe, $updateUser } = useNuxtApp();
+const { $authClient, $user } = useNuxtApp();
 const authStore = useAuthStore();
 const { t } = useI18n();
 
@@ -148,7 +148,7 @@ const handleRegister = async () => {
 
   try {
     loading.value = true;
-    await $authClient.request($registerUser(emailSignup.value, confirmPasswordSignup.value, { first_name: nameSignup.value }));
+    await $authClient.request($user.registerUser(emailSignup.value, confirmPasswordSignup.value, { first_name: nameSignup.value }));
     loading.value = false;
     activeTab.value = 0;
     emailSignup.value = "";
@@ -183,11 +183,11 @@ const handleLogin = async () => {
       const locationData = await useLocationIP();
       const userLocation = locationData.ipdata.info1;
 
-      const user = await $authClient.request($readMe({ fields: ['id', 'email', 'first_name', 'avatar', 'token', 'location'] })) as User;
+      const user = await $authClient.request($user.readMe({ fields: ['id', 'email', 'first_name', 'avatar', 'token', 'location'] })) as User;
 
       user.location = userLocation;
 
-      await $authClient.request($updateUser(user.id, { location: userLocation }));
+      await $authClient.request($user.updateUser(user.id, { location: userLocation }));
 
       authStore.setUser(user); // 更新全局状态
 

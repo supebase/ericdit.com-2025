@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $readItems } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 
 // 定义 props
 const props = defineProps({
@@ -33,7 +33,7 @@ const props = defineProps({
 // 获取评论数据
 const { data: comments, error } = await useAsyncData(`comments-${props.post_id}`, () => {
     return $directus.request(
-        $readItems('comments', {
+        $content.readItems('comments', {
             fields: ['post_id'], // 获取所有字段及其关联字段
             filter: {
                 post_id: {

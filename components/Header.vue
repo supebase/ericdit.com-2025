@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $readItems } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 
 interface GlobalData {
     title?: string
@@ -53,7 +53,7 @@ interface GlobalData {
 }
 
 const { data: global } = await useAsyncData<GlobalData>('global', async () => {
-    const items = await $directus.request($readItems('global'))
+    const items = await $directus.request($content.readItems('global'))
     return items as GlobalData
 })
 
