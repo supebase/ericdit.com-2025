@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $createItem } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 const { t, locale } = useI18n();
 const { showNotification } = useNotification();
 
@@ -142,7 +142,7 @@ const handlePostComment = async () => {
     try {
         loading.value = true;
         const response = await $directus.request(
-            $createItem('comments', {
+            $content.createItem('comments', {
                 comment: comment.value,
                 post_id: props.post_id,
                 user_created: props.user_id,

@@ -15,25 +15,22 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async checkLoginStatus() {
-      const { $authClient, $readMe } = useNuxtApp();
+      const { $authClient, $user } = useNuxtApp();
 
       this.loading = true;
       try {
-        const user = await $authClient.request($readMe({ fields: ['id', 'email', 'first_name', 'avatar', 'token', 'location'] })) as User;
+        const user = await $authClient.request($user.readMe({ fields: ['id', 'email', 'first_name', 'avatar', 'token', 'location'] })) as User;
         this.setUser(user);
-      } catch {
+      } catch (error) {
+        console.error('Error checking login status:', error);
         this.clearUser();
       } finally {
         this.loading = false;
       }
     },
     setUser(user: User) {
-      if (user && typeof user === 'object' && 'id' in user) { // 类型检查
-        this.user = user;
-        this.isLoggedIn = !!user;
-      } else {
-        console.error('Invalid user object:', user);
-      }
+      this.user = user;
+      this.isLoggedIn = true;
     },
     clearUser() {
       this.user = null;

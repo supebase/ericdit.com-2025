@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $readItems, $createItem } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 const { t } = useI18n();
 const { showNotification } = useNotification();
 
@@ -45,7 +45,7 @@ const fetchLikes = async () => {
     try {
         loading.value = true
         const response = await $directus.request(
-            $readItems('likes', {
+            $content.readItems('likes', {
                 fields: ['user_created'],
                 filter: { target_id: { _eq: props.target_id } }
             })
@@ -93,7 +93,7 @@ const handleClickLike = async () => {
 
         // 提交点赞
         await $directus.request(
-            $createItem('likes', {
+            $content.createItem('likes', {
                 user_created: props.user_id,
                 target_id: props.target_id,
                 target_type: props.target_type,

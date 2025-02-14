@@ -90,7 +90,7 @@
 </template>
 
 <script lang="ts" setup>
-const { $directus, $readItem } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 const route = useRoute();
 const authStore = useAuthStore();
 const { t } = useI18n();
@@ -101,7 +101,7 @@ const { on: onUpdated } = useEventBus<string>('updated');
 const { data: post, status, refresh } = await useAsyncData(`post-${route.params.id}`, async () => {
     const postId = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
     return await $directus.request(
-        $readItem('posts', postId, {
+        $content.readItem('posts', postId, {
             fields: ['*.*', { '*.*': ['*.*'] }]
         })
     )

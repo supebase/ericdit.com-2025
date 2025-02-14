@@ -220,7 +220,7 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $readItems, $deleteItem } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 const authStore = useAuthStore();
 
 const { on: postComment } = useEventBus<string>('comment-posted')
@@ -235,7 +235,7 @@ const props = defineProps({
 
 const { data: rawComments, status, error, refresh } = await useAsyncData(`comments-${props.post_id}`, () => {
     return $directus.request(
-        $readItems('comments', {
+        $content.readItems('comments', {
             fields: ['*', { user_created: ['*'] }],
             filter: {
                 post_id: {
@@ -375,14 +375,14 @@ const confirmDelete = async () => {
                 ?.replies || [];
 
             for (const reply of replies) {
-                await $directus.request($deleteItem('comments', reply.id));
+                await $directus.request($content.deleteItem('comments', reply.id));
             }
 
             // 再删除评论本身
-            await $directus.request($deleteItem('comments', itemToDelete.value.id));
+            await $directus.request($content.deleteItem('comments', itemToDelete.value.id));
         } else if (deleteType.value === 'reply') {
             // 删除回复
-            await $directus.request($deleteItem('comments', itemToDelete.value.id));
+            await $directus.request($content.deleteItem('comments', itemToDelete.value.id));
         }
 
         // 关闭弹窗并刷新评论列表

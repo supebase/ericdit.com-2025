@@ -15,6 +15,8 @@ export default defineNuxtConfig({
   vite: {
     build: {
       minify: "terser",
+      cssCodeSplit: true, // 按页面分割 CSS
+      sourcemap: process.env.NODE_ENV === "development", // 仅开发模式启用 source maps
     },
   },
 
@@ -106,6 +108,8 @@ export default defineNuxtConfig({
     pages: {
       index: false,
       'id': false
-    }
+    },
+
+    lazy: true
   }
 });

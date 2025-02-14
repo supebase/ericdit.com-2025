@@ -56,7 +56,7 @@ import Swiper from 'swiper';
 import { EffectCards, Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
 
-const { $directus, $readItems } = useNuxtApp();
+const { $directus, $content } = useNuxtApp();
 const { t } = useI18n();
 const { showNotification } = useNotification();
 
@@ -64,7 +64,7 @@ const { on: postUpdated } = useEventBus<string>('updated')
 
 const { data: posts, error, refresh } = await useAsyncData('posts', async () => {
   return await $directus.request(
-    $readItems('posts', {
+    $content.readItems('posts', {
       fields: ['*.*'],
       sort: ['-date_created'],
       filter: { status: 'published' },
