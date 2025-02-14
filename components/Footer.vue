@@ -1,11 +1,14 @@
 <template>
     <div class="my-8">
-        <div class="flex justify-center items-center space-x-4">
-            <div class="relative w-5 h-5 text-gray-300 cursor-pointer" @click="toggleLocale">
-                <UIcon name="ri:translate" class="w-5 h-5 transition-transform duration-300 ease-in-out"
+        <div class="flex justify-center items-center space-x-5">
+            <div class="relative w-5 h-5 text-gray-400 cursor-pointer" @click="toggleLocale">
+                <UIcon name="hugeicons:translation" class="w-5 h-5 transition-transform duration-300 ease-in-out"
                     :class="{ 'scale-x-0': isFlipping, '-scale-x-100': currentLocale === 'en' }" />
             </div>
-            <UIcon name="ri:github-fill" class="w-5 h-5 text-gray-300 cursor-pointer" />
+
+            <NuxtLink :to="link.url" target="_blank" class="text-gray-400 w-5 h-5" tabindex="-1" v-for="link in links">
+                <UIcon :name="link.icon" class="w-5 h-5" />
+            </NuxtLink>
         </div>
 
         <div class="flex flex-col justify-center items-center h-16 text-gray-600 space-y-1.5 text-[13px]">
@@ -24,8 +27,19 @@
 </template>
 
 <script setup lang="ts">
+const { $directus, $readItems } = useNuxtApp();
 const { public: { buildTime } } = useRuntimeConfig();
 const { t, setLocale, locale } = useI18n();
+
+const { data: links } = await useAsyncData('links', () => {
+    return $directus.request(
+        $readItems('links', {
+            fields: ['*.*'],
+            sort: ['sort'],
+            filter: { status: 'published' },
+        })
+    )
+})
 
 const currentLocale = ref(locale.value);
 

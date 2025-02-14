@@ -33,14 +33,6 @@
         </div>
 
         <div class="flex items-center space-x-6">
-            <!-- <div v-for="link in links">
-                <NuxtLink :to="link.url" target="_blank" class="text-sm font-medium text-gray-400 hover:text-gray-200 
-                transform transition-all duration-500 ease-in-out" tabindex="-1">
-                    <div class="hidden sm:block">{{ link.title }}</div>
-                    <UIcon :name="link.icon" class="w-5 h-5" />
-                </NuxtLink>
-            </div> -->
-
             <UBadge :ui="{ rounded: 'rounded-lg', icon: { base: 'flex-shrink-0 mr-0.5' } }" :label="$t('swipe_cards')" color="gray"
                 icon="hugeicons:touchpad-04" size="md" variant="soft"
                 class="transform transition-all duration-500 ease-in-out select-none"
@@ -53,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-const { $directus, $readItems } = useNuxtApp()
+const { $directus, $readItems } = useNuxtApp();
 
 interface GlobalData {
     title?: string
@@ -64,16 +56,6 @@ const { data: global } = await useAsyncData<GlobalData>('global', async () => {
     const items = await $directus.request($readItems('global'))
     return items as GlobalData
 })
-
-// const { data: links } = await useAsyncData('links', () => {
-//     return $directus.request(
-//         $readItems('links', {
-//             fields: ['*.*'],
-//             sort: ['sort'],
-//             filter: { status: 'published' },
-//         })
-//     )
-// })
 
 useHead({
     meta: [
