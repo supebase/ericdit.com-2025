@@ -5,7 +5,7 @@ export const useLocationIP = async () => {
   }>("https://api.vore.top/api/IPdata");
 
   if (!data.ipinfo?.text || !data.ipdata?.info1) {
-    throw new Error('Invalid IP data');
+    throw new Error("Invalid IP data");
   }
 
   return data;

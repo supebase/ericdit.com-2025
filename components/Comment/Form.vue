@@ -3,9 +3,11 @@
         <form @submit.prevent="handlePostComment">
             <div class="ring-2 ring-gray-800 bg-gray-950 rounded-lg p-3"
                 :class="{ 'ring-red-500': isCommentExceedLimit, '!ring-gray-700 !bg-gray-900': isReplying }">
-                <UTextarea ref="commentInput" color="white" variant="none" :placeholder="!props.user_id ? $t('comment_not_login') : randomPlaceholder" autoresize
-                    :rows="2" :padded="false" v-model="comment" class="text-gray-300"
-                    :class="{ 'ring-red-500': isCommentExceedLimit }" @input="handleInput" :maxlength="300" :disabled="!props.user_id" required />
+                <UTextarea ref="commentInput" color="white" variant="none"
+                    :placeholder="!props.user_id ? $t('comment_not_login') : randomPlaceholder" autoresize :rows="2"
+                    :padded="false" v-model="comment" class="text-gray-300"
+                    :class="{ 'ring-red-500': isCommentExceedLimit }" @input="handleInput" :maxlength="300"
+                    :disabled="!props.user_id" required />
                 <div class="flex justify-between items-center pt-1">
                     <div class="flex items-center space-x-4" :class="!props.user_id ? 'hidden' : ''">
                         <Emoji @emoji="handleEmojiInsert" />
@@ -214,6 +216,7 @@ onReply(({ comment, user }) => {
 
 // 取消回复
 const cancelReply = () => {
+    comment.value = "";
     isReplying.value = false;
     replyingToUser.value = "";
     replyingToCommentId.value = "";

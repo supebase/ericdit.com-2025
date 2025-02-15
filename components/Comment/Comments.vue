@@ -19,9 +19,9 @@
                 <div class="flex flex-row justify-between items-center">
                     <div class="group flex items-center">
                         <UChip inset :show="comment.user_created.token ? true : false">
-                        <UAvatar size="md"
-                            :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                            :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
+                            <UAvatar size="md"
+                                :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
+                                :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
                         </UChip>
                         <div class="ml-4">
                             <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
@@ -58,9 +58,9 @@
                         <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
                             <div class="group flex items-center">
                                 <UChip inset :show="reply.user_created.token ? true : false">
-                                <UAvatar size="md"
-                                    :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                    :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
+                                    <UAvatar size="md"
+                                        :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
+                                        :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
                                 </UChip>
                                 <div class="ml-4">
                                     <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
@@ -74,7 +74,8 @@
                                 </div>
                             </div>
                             <div class="text-gray-600 flex items-center space-x-5">
-                                <CommonLike :target_id="reply.id" :user_id="authStore.user?.id" :target_type="`comment`" />
+                                <CommonLike :target_id="reply.id" :user_id="authStore.user?.id"
+                                    :target_type="`comment`" />
                                 <UBadge v-if="authStore.user && authStore.user.id === reply.user_created.id"
                                     :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_delete_button')" size="sm"
                                     variant="soft" color="gray" class="cursor-pointer"
@@ -116,9 +117,9 @@
                     <div class="flex flex-row justify-between items-center">
                         <div class="group flex items-center">
                             <UChip inset :show="comment.user_created.token ? true : false">
-                            <UAvatar size="md"
-                                :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
+                                <UAvatar size="md"
+                                    :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
+                                    :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
                             </UChip>
                             <div class="ml-4">
                                 <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
@@ -132,7 +133,8 @@
                             </div>
                         </div>
                         <div class="text-gray-600 flex items-center space-x-5">
-                            <CommonLike :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
+                            <CommonLike :target_id="comment.id" :user_id="authStore.user?.id"
+                                :target_type="`comment`" />
                             <UBadge v-if="authStore.user && authStore.user.id !== comment.user_created.id"
                                 :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_reply_button')" size="sm"
                                 variant="soft" color="gray" class="cursor-pointer" @click="handleReply(comment)" />
@@ -155,9 +157,9 @@
                             <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
                                 <div class="group flex items-center">
                                     <UChip inset :show="reply.user_created.token ? true : false">
-                                    <UAvatar size="md"
-                                        :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                        :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
+                                        <UAvatar size="md"
+                                            :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
+                                            :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
                                     </UChip>
                                     <div class="ml-4">
                                         <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
@@ -180,8 +182,8 @@
                                 </div>
                             </div>
                             <div class="ml-14">
-                                <CommonMarkdownRenderer :markdown="reply.comment" :enableHtml="false" :enableLink="false"
-                                    class="text-gray-300" />
+                                <CommonMarkdownRenderer :markdown="reply.comment" :enableHtml="false"
+                                    :enableLink="false" class="text-gray-300" />
                             </div>
                         </div>
 

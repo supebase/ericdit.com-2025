@@ -7,7 +7,7 @@ interface User {
   location: string;
 }
 
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null as User | null,
     isLoggedIn: false,
@@ -19,10 +19,20 @@ export const useAuthStore = defineStore('auth', {
 
       this.loading = true;
       try {
-        const user = await $authClient.request($user.readMe({ fields: ['id', 'email', 'first_name', 'avatar', 'token', 'location'] })) as User;
+        const user = (await $authClient.request(
+          $user.readMe({
+            fields: [
+              "id",
+              "email",
+              "first_name",
+              "avatar",
+              "token",
+              "location",
+            ],
+          })
+        )) as User;
         this.setUser(user);
       } catch (error) {
-        console.error('Error checking login status:', error);
         this.clearUser();
       } finally {
         this.loading = false;

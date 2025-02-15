@@ -12,7 +12,7 @@ const md = new MarkdownIt({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value;
-      } catch (__) { }
+      } catch (__) {}
     }
     return ""; // 使用默认的高亮处理
   },
@@ -44,7 +44,7 @@ md.renderer.rules.fence = (tokens: any, idx: any) => {
   if (lang && hljs.getLanguage(lang)) {
     try {
       highlightedCode = hljs.highlight(code, { language: lang }).value;
-    } catch (__) { }
+    } catch (__) {}
   }
 
   // 将代码按行分割
@@ -100,8 +100,8 @@ export const useMarkdownParser = () => {
     enableHtml: boolean = true,
     enableLink: boolean = true
   ): string => {
-    if (typeof markdown !== 'string') {
-      return '';
+    if (typeof markdown !== "string") {
+      return "";
     }
 
     const localMd = new MarkdownIt({
@@ -113,7 +113,7 @@ export const useMarkdownParser = () => {
         if (lang && hljs.getLanguage(lang)) {
           try {
             return hljs.highlight(str, { language: lang }).value;
-          } catch (__) { }
+          } catch (__) {}
         }
         return ""; // 使用默认的高亮处理
       },

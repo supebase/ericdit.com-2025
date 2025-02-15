@@ -11,8 +11,8 @@
         <div class="relative w-8 h-8" :class="{ 'animate-like': isAnimating, 'order-1': target_type === 'comment' }"
             @animationend="isAnimating = false">
             <UIcon :name="target_type === 'post'
-                    ? (hasLiked ? 'hugeicons:clapping-02' : 'hugeicons:clapping-02')
-                    : (hasLiked ? 'hugeicons:heart-check' : 'hugeicons:favourite')
+                ? (hasLiked ? 'hugeicons:clapping-02' : 'hugeicons:clapping-02')
+                : (hasLiked ? 'hugeicons:heart-check' : 'hugeicons:favourite')
                 " class="w-8 h-8 transition-all duration-300 "
                 :class="{ 'text-gray-400': hasLiked, 'text-gray-200': !hasLiked, '!w-5 !h-5 mt-[5px]': target_type === 'comment' }" />
         </div>
