@@ -47,7 +47,7 @@
 
                 <div class="space-y-6 mt-6">
                     <div v-if="post?.github_link" class="my-6">
-                        <GithubCard :githubUrl="post?.github_link" />
+                        <GitHubCard :githubUrl="post?.github_link" />
                     </div>
 
                     <div v-if="!post?.tag" class="post space-y-6">
@@ -58,10 +58,10 @@
                         <hr />
                     </div>
 
-                    <MarkdownRenderer :markdown="post?.content" />
+                    <CommonMarkdownRenderer :markdown="post?.content" />
 
                     <div class="flex justify-center pt-4">
-                        <Like :target_id="post?.id" :user_id="authStore.user?.id" :target_type="`post`" />
+                        <CommonLike :target_id="post?.id" :user_id="authStore.user?.id" :target_type="`post`" />
                     </div>
                 </div>
             </div>

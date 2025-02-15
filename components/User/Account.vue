@@ -18,7 +18,7 @@
         </div>
         <template v-else>
           <div class="py-4">
-            <Avatar ref="avatarRef" />
+            <UserAvatar ref="avatarRef" />
           </div>
 
           <div class="flex flex-col items-center space-y-2">

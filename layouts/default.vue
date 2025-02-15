@@ -1,14 +1,14 @@
 <template>
   <div class="flex items-center">
     <div class="p-6 w-full fixed top-0 z-50 header">
-      <Header />
+      <CommonHeader />
     </div>
   </div>
   <div class="mx-auto px-6 mt-[7.5rem]" :class="containerClass">
     <slot />
   </div>
 
-  <Footer />
+  <CommonFooter />
 </template>
 
 <script lang="ts" setup>

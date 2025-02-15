@@ -1,20 +1,34 @@
+import { createResolver } from "@nuxt/kit";
 import buildTime from "./build-time.json"; // 导入构建时间
 import { VersionManager } from "./scripts/versionManager"; // 导入版本管理器
 
+const { resolve } = createResolver(import.meta.url);
+
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   ssr: false,
-  modules: ["@vueuse/nuxt", "@nuxt/ui", "@pinia/nuxt", "nuxt-emoji-picker", "@nuxtjs/i18n"],
+  modules: [
+    "@vueuse/nuxt",
+    "@nuxt/ui",
+    "@pinia/nuxt",
+    "nuxt-emoji-picker",
+    "@nuxtjs/i18n",
+  ],
 
   experimental: {
     appManifest: false,
     payloadExtraction: true,
   },
 
+  vue: {
+    propsDestructure: true,
+  },
+
   vite: {
     build: {
       minify: "terser",
+      target: "esnext",
       cssCodeSplit: true, // 按页面分割 CSS
       sourcemap: process.env.NODE_ENV === "development", // 仅开发模式启用 source maps
     },
@@ -22,6 +36,21 @@ export default defineNuxtConfig({
 
   nitro: {
     compressPublicAssets: true,
+    esbuild: {
+      options: {
+        target: "esnext",
+      },
+    },
+    prerender: {
+      crawlLinks: true,
+    },
+    publicAssets: [
+      {
+        dir: resolve("./public/fonts"),
+        maxAge: 24 * 60 * 60 * 365, // 1 year (versioned)
+        baseURL: "/fonts",
+      },
+    ],
   },
 
   runtimeConfig: {
@@ -100,16 +129,16 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    vueI18n: './i18n.config.ts',
-    locales: ['cn', 'en'],
+    vueI18n: "./i18n.config.ts",
+    locales: ["cn", "en"],
     defaultLocale: "cn",
 
-    customRoutes: 'config',
+    customRoutes: "config",
     pages: {
       index: false,
-      'id': false
+      id: false,
     },
 
-    lazy: true
-  }
+    lazy: true,
+  },
 });

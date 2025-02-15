@@ -63,7 +63,7 @@
         :src="`${useAssets(authStore.user?.avatar || '')}?fit=outside&quality=30&withoutEnlargement&width=100&height=100`"
         :alt="authStore.user?.first_name" class="ring-2 ring-gray-800" />
     </div>
-    <Account v-if="authStore.isLoggedIn" ref="userInfoModal" />
+    <UserAccount v-if="authStore.isLoggedIn" ref="userInfoModal" />
   </div>
 </template>
 

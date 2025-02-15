@@ -38,8 +38,8 @@
                 class="transform transition-all duration-500 ease-in-out select-none"
                 :class="$route.path !== '/' ? 'translate-x-6 opacity-0' : 'translate-x-0 opacity-100'" />
 
-            <Generator />
-            <Auth />
+            <AIGenerator />
+            <UserAuth />
         </div>
     </div>
 </template>

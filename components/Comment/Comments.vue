@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="text-gray-600 flex items-center space-x-5">
-                        <Like :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
+                        <CommonLike :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
                         <UBadge v-if="authStore.user && authStore.user.id !== comment.user_created.id"
                             :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_reply_button')" size="sm" variant="soft"
                             color="gray" class="cursor-pointer" @click="handleReply(comment)" />
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="ml-14">
-                    <MarkdownRenderer :markdown="comment.comment" :enableHtml="false" :enableLink="false"
+                    <CommonMarkdownRenderer :markdown="comment.comment" :enableHtml="false" :enableLink="false"
                         class="text-gray-300" />
                 </div>
 
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="text-gray-600 flex items-center space-x-5">
-                                <Like :target_id="reply.id" :user_id="authStore.user?.id" :target_type="`comment`" />
+                                <CommonLike :target_id="reply.id" :user_id="authStore.user?.id" :target_type="`comment`" />
                                 <UBadge v-if="authStore.user && authStore.user.id === reply.user_created.id"
                                     :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_delete_button')" size="sm"
                                     variant="soft" color="gray" class="cursor-pointer"
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <div class="ml-14">
-                            <MarkdownRenderer :markdown="reply.comment" :enableHtml="false" :enableLink="false"
+                            <CommonMarkdownRenderer :markdown="reply.comment" :enableHtml="false" :enableLink="false"
                                 class="text-gray-300" />
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                         <div class="text-gray-600 flex items-center space-x-5">
-                            <Like :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
+                            <CommonLike :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
                             <UBadge v-if="authStore.user && authStore.user.id !== comment.user_created.id"
                                 :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_reply_button')" size="sm"
                                 variant="soft" color="gray" class="cursor-pointer" @click="handleReply(comment)" />
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     <div class="ml-14">
-                        <MarkdownRenderer :markdown="comment.comment" :enableHtml="false" :enableLink="false"
+                        <CommonMarkdownRenderer :markdown="comment.comment" :enableHtml="false" :enableLink="false"
                             class="text-gray-300" />
                     </div>
 
@@ -171,7 +171,7 @@
                                     </div>
                                 </div>
                                 <div class="text-gray-600 flex items-center space-x-5">
-                                    <Like :target_id="reply.id" :user_id="authStore.user?.id"
+                                    <CommonLike :target_id="reply.id" :user_id="authStore.user?.id"
                                         :target_type="`comment`" />
                                     <UBadge v-if="authStore.user && authStore.user.id === reply.user_created.id"
                                         :ui="{ rounded: 'rounded-lg' }" :label="$t('comment_delete_button')" size="sm"
@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                             <div class="ml-14">
-                                <MarkdownRenderer :markdown="reply.comment" :enableHtml="false" :enableLink="false"
+                                <CommonMarkdownRenderer :markdown="reply.comment" :enableHtml="false" :enableLink="false"
                                     class="text-gray-300" />
                             </div>
                         </div>
