@@ -30,20 +30,20 @@ onMounted(async () => {
   // 监听实时更新
   for await (const item of subscription) {
     // 仅处理非初始化事件且包含数据的事件
-    if (item.event !== 'init' && item.data) {
+    if (item.event !== 'init') {
       post('isUpdated')
     }
   }
 
   // 建立连接
-  $realtimeClient.connect()
+  $realtimeClient.connect();
+  console.log("Websocket connection established");
+})
 
-  // 组件卸载时取消订阅
-  onBeforeUnmount(() => {
-    if (subscription) {
-      subscription.unsubscribe();
-    }
-  })
+// 组件卸载时取消订阅
+onBeforeUnmount(() => {
+  $realtimeClient.disconnect();
+  console.log("Websocket disconnected");
 })
 
 // 设置页面标题

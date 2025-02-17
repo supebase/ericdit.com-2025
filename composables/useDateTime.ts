@@ -104,8 +104,8 @@ export function useFormatDate(
 export function useReadingTime(text: string) {
   const { t } = useI18n();
 
-  const englishReadingSpeed = 200; // 英文单词
-  const chineseReadingSpeed = 400; // 中文字符
+  const englishReadingSpeed = 180; // 英文单词
+  const chineseReadingSpeed = 450; // 中文字符
 
   const isChinese = /[\u4e00-\u9fa5]/.test(text);
   const count = isChinese
