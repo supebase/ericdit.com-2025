@@ -20,7 +20,7 @@
             <div class="swiper-slide" v-for="post in group.posts" :key="post.id">
               <article class="card card-post">
                 <div class="card-header">
-                  <NuxtLink :href="post.id" class="card-title truncate text-gray-100" tabindex="-1">{{ post.title }}
+                  <NuxtLink :href="post.id" class="card-title truncate text-gray-900 dark:text-gray-100" tabindex="-1">{{ post.title }}
                   </NuxtLink>
                   <div class="card-meta mt-2.5 flex items-center">
                     <time class="card-date">
@@ -34,11 +34,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="card-content line-clamp-4 text-gray-300/90">
+                <div class="card-content line-clamp-4 text-gray-700/90 dark:text-gray-300/90">
                   {{ post.summary }}
                 </div>
                 <div class="card-footer flex items-center justify-between">
-                  <UBadge variant="solid" size="md" color="white" class="select-none opacity-70">{{
+                  <UBadge variant="solid" size="sm" color="white" class="select-none opacity-70">{{
                     post.tag ? post.tag.name : $t('post_tag_ai') }}</UBadge>
                   <CommentCounter :post_id="post.id" :isHome="true" :allowComment="post.allowComment" />
                 </div>
@@ -74,8 +74,10 @@ const { data: posts, error, refresh } = await useAsyncData('posts', async () => 
 
 postUpdated((msg) => {
   if (msg === 'isUpdated') {
+    refresh();
+    
     setTimeout(() => {
-      showNotification('post-change', 'success', t('post_success_changed_msg'));
+      showNotification('post-change', 'warning', t('post_success_changed_msg'));
     }, 500)
   }
 });
@@ -101,6 +103,15 @@ const sortedGroupedPosts = computed(() => {
     }));
 });
 
+// 添加 Swiper 实例存储
+const swiperInstances = ref<Swiper[]>([]);
+
+// 添加 Swiper 销毁方法
+const destroySwipers = () => {
+  swiperInstances.value.forEach(swiper => swiper.destroy());
+  swiperInstances.value = [];
+};
+
 // 动态更新导航按钮状态
 const updateNavButtons = (swiper: any) => {
   const prevEl = swiper.navigation.prevEl;
@@ -109,13 +120,13 @@ const updateNavButtons = (swiper: any) => {
   nextEl.classList.toggle('swiper-button-disabled', swiper.isEnd);
 };
 
-// 初始化 Swiper
+// 修改初始化方法
 const initSwiper = (year: string) => {
-  new Swiper(`.featured-slider-${year}`, {
+  const swiper = new Swiper(`.featured-slider-${year}`, {
     modules: [EffectCards, Navigation],
     effect: 'cards',
     cardsEffect: {
-      slideShadows: true,
+      slideShadows: false,
       perSlideRotate: 3,
       perSlideOffset: 8,
     },
@@ -126,20 +137,33 @@ const initSwiper = (year: string) => {
     grabCursor: true,
     touchRatio: 0.4,
     on: {
-      init: function (swiper) {
-        updateNavButtons(swiper);
-      },
-      slideChange: function (swiper) {
-        updateNavButtons(swiper);
-      },
+      init: updateNavButtons,
+      slideChange: updateNavButtons,
     },
   });
+  swiperInstances.value.push(swiper);
 };
 
 onMounted(() => {
   sortedGroupedPosts.value.forEach((group) => {
     initSwiper(group.year);
   });
+});
+
+const isClient = typeof window != 'undefined';
+
+// 添加监听和初始化逻辑
+watch(sortedGroupedPosts, async (newGroups) => {
+  if (isClient) {
+    await nextTick();
+    destroySwipers();
+    newGroups.forEach(group => initSwiper(group.year));
+  }
+}, { immediate: true });
+
+// 组件卸载时清理
+onBeforeUnmount(() => {
+  destroySwipers();
 });
 
 useSeoMeta({

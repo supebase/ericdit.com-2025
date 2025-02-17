@@ -15,6 +15,12 @@ html {
   overflow-y: scroll;
   overflow-x: hidden;
   /* scroll-behavior: smooth !important; */
+  background-color: #09090b;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+html.light {
+  background-color: #fafafa;
 }
 
 body {
@@ -22,7 +28,6 @@ body {
     linear-gradient(to right, hsl(210, 0%, 5%) 1px, #000000 1px);
   background-size: 20px 20px;
   background-attachment: fixed; */
-  background-color: #09090b;
   overflow-x: hidden;
 }
 
@@ -40,6 +45,15 @@ body {
   pointer-events: none;
   position: absolute;
   width: 100%;
+}
+
+.light .header::before {
+  background-image: linear-gradient(0deg,
+      transparent 0%,
+      rgba(250, 250, 250, 0.5) 15%,
+      rgba(250, 250, 250, 0.8) 30%,
+      rgba(250, 250, 250, 1) 50%,
+      rgba(250, 250, 250, 1) 100%);
 }
 
 /* 设置滚动条的宽度 */
@@ -63,6 +77,25 @@ body {
 /* 设置滚动条滑块的悬停效果 */
 ::-webkit-scrollbar-thumb:hover {
   background: #0a0a0a;
+  /* 悬停时的颜色 */
+}
+
+/* 设置滚动条的轨道 */
+.light ::-webkit-scrollbar-track {
+  background: #f4f4f5;
+  /* 深色背景 */
+}
+
+/* 设置滚动条的滑块 */
+.light ::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  /* 深色滑块 */
+  border-radius: 6px;
+}
+
+/* 设置滚动条滑块的悬停效果 */
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #fafafa;
   /* 悬停时的颜色 */
 }
 
@@ -102,7 +135,6 @@ body {
   stroke-dasharray: 1000px;
   stroke-dashoffset: 1000px;
   animation: write 5s ease forwards;
-  stroke: #fed7aa;
 }
 
 .eric path:nth-child(2) {
@@ -110,7 +142,6 @@ body {
   stroke-dashoffset: 1000px;
   animation: write 5s ease forwards;
   animation-delay: 1.5s;
-  stroke: #fed7aa;
 }
 
 .eric path:nth-child(3) {
@@ -118,7 +149,6 @@ body {
   stroke-dashoffset: 1000px;
   animation: write 5s ease forwards;
   animation-delay: 2s;
-  stroke: #fed7aa;
 }
 
 .year-stroke {
@@ -131,6 +161,10 @@ body {
   -webkit-text-stroke: 2px #18181b;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.light .year-stroke {
+  -webkit-text-stroke: 2px #e4e4e7;
 }
 
 .git-nums {
@@ -232,13 +266,4 @@ hr {
 /* 应用对勾路径的动画，延迟0.9s开始 */
 .check {
   animation: drawCheck 0.5s 0.9s forwards;
-}
-
-.cube {
-  border: 0;
-  background: #fed7aa;
-  background: -moz-linear-gradient(-32deg, #71717a90 20%, #fed7aa90 40%, #f9731690 100%);
-  background: -webkit-linear-gradient(-32deg, #71717a90 20%, #fed7aa90 40%, #f9731690 100%);
-  background: linear-gradient(142deg, #71717a90 20%, #fed7aa90 40%, #f9731690 100%);
-  padding: 1px;
 }

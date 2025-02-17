@@ -49,10 +49,9 @@
     --button-hover--opacity: 1;
 }
 
-/* Dark mode */
-:root[data-color-scheme=dark] {
+:root.light {
     --color-contrast: #fff;
-    --color-background: #1f2023;
+    --color-background: #f4f4f5;
     --color-background-100: #131416;
     --color-background-200: #2c2d30;
     --color-background-300: #35373b;
@@ -88,7 +87,6 @@
 }
 
 .section-title {
-
     flex: 1 0 0%;
     font-size: var(--font-small);
     padding: 0 var(--spacing-3);

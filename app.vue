@@ -5,15 +5,17 @@
       <NuxtPage />
     </NuxtLayout>
 
-    <Toaster richColors theme="dark" :expand="true" position="top-center" />
+    <Toaster richColors :theme="isDark" :expand="true" position="top-center" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Toaster } from 'vue-sonner'
+import { Toaster } from 'vue-sonner';
 
 const { $realtimeClient } = useNuxtApp();
 const authStore = useAuthStore();
+const colorMode = useColorMode();
+const isDark = computed(() => (colorMode.value === 'dark' ? 'dark' : 'light') as 'dark' | 'light')
 
 const { emit: post } = useEventBus<string>('updated')
 

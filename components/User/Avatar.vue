@@ -4,10 +4,10 @@
         <div class="relative w-20 h-20 rounded-full cursor-pointer" @click="openFileInput">
             <UAvatar size="3xl"
                 :src="`${currentAvatarUrl || ''}?fit=outside&quality=80&withoutEnlargement&width=90&height=90`"
-                :alt="authStore.user?.first_name" class="ring-2 ring-gray-800" />
+                :alt="authStore.user?.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
             <!-- 删除图标 -->
             <div v-if="currentAvatarId" class="absolute bottom-0 -right-2 cursor-pointer" @click.stop="deleteAvatar">
-                <div class="ring-2 ring-zinc-900 bg-zinc-900 rounded-full w-6 h-6">
+                <div class="ring-2 ring-gray-100 dark:ring-gray-900 bg-gray-100 dark:bg-gray-900 rounded-full w-6 h-6">
                     <UIcon name="hugeicons:cancel-circle-half-dot" class="w-6 h-6 text-red-500" />
                 </div>
             </div>

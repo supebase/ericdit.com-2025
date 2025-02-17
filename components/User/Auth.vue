@@ -1,8 +1,8 @@
 <template>
   <div v-if="!authStore.isLoggedIn">
     <div @click="isOpen = true">
-      <UAvatar size="sm" src="" icon="hugeicons:lock-key" class="ring-2 ring-gray-800 cursor-pointer"
-        :ui="{ background: 'dark:bg-gray-900', icon: { size: { sm: 'h-5 w-5' } } }" />
+      <UAvatar size="sm" src="" icon="hugeicons:lock-key" class="ring-2 ring-gray-200 dark:ring-gray-800 cursor-pointer"
+        :ui="{ background: 'bg-gray-100 dark:bg-gray-900', icon: { size: { sm: 'h-5 w-5' } } }" />
     </div>
 
     <UModal v-model="isOpen" prevent-close :ui="{
@@ -11,7 +11,7 @@
         leaveTo: '-translate-y-4'
       }
     }">
-      <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-800' }">
+      <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-200 dark:divide-gray-800' }">
         <div>
           <UTabs v-model="activeTab" :items="items" class="w-full">
             <template #item="{ item }">
@@ -61,7 +61,7 @@
     <div @click="openUserInfoModal" class="cursor-pointer mt-0.5">
       <UAvatar size="sm"
         :src="`${useAssets(authStore.user?.avatar || '')}?fit=outside&quality=30&withoutEnlargement&width=100&height=100`"
-        :alt="authStore.user?.first_name" class="ring-2 ring-gray-800" />
+        :alt="authStore.user?.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
     </div>
     <UserAccount v-if="authStore.isLoggedIn" ref="userInfoModal" />
   </div>

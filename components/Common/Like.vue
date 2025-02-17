@@ -3,7 +3,7 @@
         :class="{ 'cursor-pointer': canLike && !loading, 'opacity-50': !canLike || loading, 'flex items-center !space-y-0': target_type === 'comment' }"
         @click="handleClickLike" ref="buttonRef">
         <div class="git-nums text-center transition-all duration-300 overflow-hidden"
-            :class="{ 'text-gray-400': hasLiked, 'text-gray-200': !hasLiked, 'order-2 !text-sm': target_type === 'comment' }">
+            :class="{ 'text-gray-600 dark:text-gray-400': hasLiked, 'text-gray-800 dark:text-gray-200': !hasLiked, 'order-2 !text-sm': target_type === 'comment' }">
             <div class="number-roll" :style="{ transform: `translateY(${translateY}%)` }">
                 <div v-for="num in numbers" :key="num">{{ num }}</div>
             </div>
@@ -14,7 +14,7 @@
                 ? (hasLiked ? 'hugeicons:clapping-02' : 'hugeicons:clapping-02')
                 : (hasLiked ? 'hugeicons:heart-check' : 'hugeicons:favourite')
                 " class="w-8 h-8 transition-all duration-300 "
-                :class="{ 'text-gray-400': hasLiked, 'text-gray-200': !hasLiked, '!w-5 !h-5 mt-[5px]': target_type === 'comment' }" />
+                :class="{ 'text-gray-600 dark:text-gray-400': hasLiked, 'text-gray-800 dark:text-gray-200': !hasLiked, '!w-5 !h-5 mt-[5px]': target_type === 'comment' }" />
         </div>
     </div>
 </template>

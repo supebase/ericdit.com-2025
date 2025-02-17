@@ -1,9 +1,9 @@
 <template>
   <UModal v-model="isOpen" prevent-close :ui="{ width: 'w-full sm:max-w-sm' }">
-    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-800' }">
+    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-200 dark:divide-gray-800' }">
       <template #header>
         <div class="flex items-center justify-between">
-          <div to="/" class="eric-font text-2xl font-medium text-orange-200 h-3" tabindex="-1">
+          <div to="/" class="eric-font text-2xl font-medium text-gray-900 dark:text-orange-200 h-3" tabindex="-1">
             Eric.
           </div>
           <UButton color="gray" variant="ghost" icon="ri:close-line" class="-my-1" tabindex="-1"

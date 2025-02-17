@@ -21,10 +21,10 @@
                         <UChip inset :show="comment.user_created.token ? true : false">
                             <UAvatar size="md"
                                 :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
+                                :alt="comment.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
                         </UChip>
                         <div class="ml-4">
-                            <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
+                            <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
                                 <div>{{ comment.user_created.first_name }}</div>
                             </div>
                             <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="ml-14">
                     <CommonMarkdownRenderer :markdown="comment.comment" :enableHtml="false" :enableLink="false"
-                        class="text-gray-300" />
+                        class="text-gray-700 dark:text-gray-300" />
                 </div>
 
                 <!-- 回复部分 -->
@@ -60,10 +60,10 @@
                                 <UChip inset :show="reply.user_created.token ? true : false">
                                     <UAvatar size="md"
                                         :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                        :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
+                                        :alt="reply.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
                                 </UChip>
                                 <div class="ml-4">
-                                    <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
+                                    <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
                                         <div>{{ reply.user_created.first_name }}</div>
                                     </div>
                                     <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="ml-14">
                             <CommonMarkdownRenderer :markdown="reply.comment" :enableHtml="false" :enableLink="false"
-                                class="text-gray-300" />
+                                class="text-gray-700 dark:text-gray-300" />
                         </div>
                     </div>
 
@@ -119,10 +119,10 @@
                             <UChip inset :show="comment.user_created.token ? true : false">
                                 <UAvatar size="md"
                                     :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                    :alt="comment.user_created.first_name" class="ring-2 ring-gray-800" />
+                                    :alt="comment.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
                             </UChip>
                             <div class="ml-4">
-                                <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
+                                <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
                                     <div>{{ comment.user_created.first_name }}</div>
                                 </div>
                                 <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
@@ -146,7 +146,7 @@
                     </div>
                     <div class="ml-14">
                         <CommonMarkdownRenderer :markdown="comment.comment" :enableHtml="false" :enableLink="false"
-                            class="text-gray-300" />
+                            class="text-gray-700 dark:text-gray-300" />
                     </div>
 
                     <!-- 回复部分 -->
@@ -159,10 +159,10 @@
                                     <UChip inset :show="reply.user_created.token ? true : false">
                                         <UAvatar size="md"
                                             :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                            :alt="reply.user_created.first_name" class="ring-2 ring-gray-800" />
+                                            :alt="reply.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
                                     </UChip>
                                     <div class="ml-4">
-                                        <div class="flex items-center text-base font-medium text-gray-200 space-x-3">
+                                        <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
                                             <div>{{ reply.user_created.first_name }}</div>
                                         </div>
                                         <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
@@ -183,7 +183,7 @@
                             </div>
                             <div class="ml-14">
                                 <CommonMarkdownRenderer :markdown="reply.comment" :enableHtml="false"
-                                    :enableLink="false" class="text-gray-300" />
+                                    :enableLink="false" class="text-gray-700 dark:text-gray-300" />
                             </div>
                         </div>
 

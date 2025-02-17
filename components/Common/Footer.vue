@@ -1,6 +1,8 @@
 <template>
     <div class="my-8">
         <div class="flex justify-center items-center space-x-5">
+            <CommonColorMode />
+            
             <div class="relative w-5 h-5 text-gray-400 cursor-pointer" @click="toggleLocale">
                 <UIcon name="hugeicons:translation" class="w-5 h-5 transition-transform duration-300 ease-in-out"
                     :class="{ 'scale-x-0': isFlipping, '-scale-x-100': currentLocale === 'en' }" />

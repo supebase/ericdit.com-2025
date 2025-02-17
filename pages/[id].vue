@@ -29,9 +29,9 @@
                     <div class="group flex items-center mt-6" v-for="author in post?.authors">
                         <UAvatar size="md"
                             :src="`${useAssets(author.authors_id.avatar.filename_disk)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                            :alt="author.authors_id.name" class="ring-2 ring-gray-800" />
+                            :alt="author.authors_id.name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
                         <div class="ml-4">
-                            <p class="text-base font-medium text-gray-200">
+                            <p class="text-base font-medium text-gray-800 dark:text-gray-200">
                                 {{ author.authors_id.name }}
                             </p>
                             <p class="text-[0.8rem] text-gray-600">
@@ -81,7 +81,7 @@
                     <UDivider :label="$t('comment_is_closed')" :ui="{ label: 'text-gray-500' }" type="dashed"
                         class="py-1" />
                     <div class="flex justify-center items-center mt-8 pb-6 space-y-4">
-                        <UIcon name="hugeicons:comment-block-02" class="w-12 h-12 text-gray-800" />
+                        <UIcon name="hugeicons:comment-block-02" class="w-12 h-12 text-gray-300 dark:text-gray-800" />
                     </div>
                 </div>
             </div>
@@ -94,6 +94,7 @@ const { $directus, $content } = useNuxtApp();
 const route = useRoute();
 const authStore = useAuthStore();
 const { t } = useI18n();
+const { showNotification } = useNotification();
 
 // 监听 updated 事件
 const { on: onUpdated } = useEventBus<string>('updated');
@@ -111,6 +112,8 @@ onUpdated((msg) => {
     if (msg === 'isUpdated') {
         setTimeout(() => {
             refresh(); // 刷新数据
+
+            showNotification('post-change', 'warning', t('post_success_changed_msg'));
         }, 500)
     }
 });

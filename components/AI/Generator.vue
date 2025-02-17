@@ -1,7 +1,7 @@
 <template>
     <div @click="isOpen = true">
         <UTooltip :popper="{ arrow: true, placement: 'bottom', offsetDistance: 12 }">
-            <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-orange-200 mt-2" />
+            <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-primary dark:text-orange-200 mt-2" />
             <template #text>
                 <span>{{ $t('ai_generator_start') }}</span>
             </template>
@@ -14,10 +14,10 @@
             leaveTo: '-translate-y-4'
         }
     }">
-        <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-800' }">
+        <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-200 dark:divide-gray-800' }">
             <template #header>
                 <div class="flex items-center justify-between">
-                    <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-orange-200" />
+                    <UIcon name="ri:ai-generate" class="cursor-pointer h-6 w-6 text-primary dark:text-orange-200" />
                     <UButton color="gray" variant="ghost" icon="ri:close-line" class="-my-1" tabindex="-1"
                         @click="isOpen = false" />
                 </div>

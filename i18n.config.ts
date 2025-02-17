@@ -59,7 +59,7 @@ export default defineI18nConfig(() => ({
       post_published: "发布",
       post_updated: "更新",
       post_tag_ai: "AI 创作",
-      post_success_changed_msg: "检测到页面变更，刷新页面加载最新内容。",
+      post_success_changed_msg: "页面变更，如果未自动刷新，请手动获取。",
 
       comment_welcome: "欢迎在评论区分享您的想法！",
       comment_loading: "正在加载",
@@ -183,7 +183,7 @@ export default defineI18nConfig(() => ({
       post_updated: "",
       post_tag_ai: "AI Generated",
       post_success_changed_msg:
-        "Changes detected, refreshing for latest content.",
+        "The page changes. If it does not refresh automatically, please obtain it manually.",
 
       comment_welcome: "Welcome to share your thoughts!",
       comment_loading: "Loading",
