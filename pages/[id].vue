@@ -25,7 +25,7 @@
                     <div v-if="post?.date_updated">{{ useFormatDate(post?.date_updated) }}{{ $t('post_updated') }}</div>
                 </div>
 
-                <div class="flex flex-row items-center space-x-10" v-if="post?.authors?.length">
+                <div class="flex flex-row justify-between items-center space-x-10" v-if="post?.authors?.length">
                     <div class="group flex items-center mt-6" v-for="author in post?.authors">
                         <UAvatar size="md"
                             :src="`${useAssets(author.authors_id.avatar.filename_disk)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
@@ -39,6 +39,10 @@
                             </p>
                         </div>
                     </div>
+
+                    <UIcon name="hugeicons:share-05"
+                        class="w-5 h-5 text-gray-700 dark:text-gray-300 mt-6 cursor-pointer"
+                        @click="shareButton(post?.title, post?.summary)" />
                 </div>
 
                 <UAlert icon="hugeicons:alert-02" color="primary" variant="soft" class="mt-6"
@@ -90,6 +94,8 @@
 </template>
 
 <script lang="ts" setup>
+import { isClient } from '@vueuse/shared';
+
 const { $directus, $content } = useNuxtApp();
 const route = useRoute();
 const authStore = useAuthStore();
@@ -108,15 +114,37 @@ const { data: post, status, refresh } = await useAsyncData(`post-${route.params.
     )
 })
 
+const { show } = useWebNotification({
+    title: t('post_success_changed_msg'),
+    dir: 'auto',
+    renotify: true,
+    tag: 'post'
+});
+
 onUpdated((msg) => {
     if (msg === 'isUpdated') {
         setTimeout(() => {
             refresh(); // 刷新数据
-
-            showNotification('post-change', 'warning', t('post_success_changed_msg'));
+            show();
         }, 500)
     }
 });
+
+const { share, isSupported } = useShare();
+
+const shareButton = (title: string, text: string) => {
+    if (isSupported) {
+        return share(
+            {
+                title: title,
+                text: text,
+                url: isClient ? location.href : ''
+            }
+        ).catch(err => err)
+    } else {
+        showNotification('post-share', 'warning', t('post_share_msg'));
+    }
+}
 
 useSeoMeta({
     title: computed(() => post.value?.title || t('common_home')),

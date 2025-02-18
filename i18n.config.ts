@@ -1,6 +1,6 @@
 export default defineI18nConfig(() => ({
   legacy: false,
-  locale: "cn",
+  locale: "cn" as "cn" | "en",
   messages: {
     cn: {
       auth_login: "登录",
@@ -60,6 +60,7 @@ export default defineI18nConfig(() => ({
       post_updated: "更新",
       post_tag_ai: "AI 创作",
       post_success_changed_msg: "页面变更，如果未自动刷新，请手动获取。",
+      post_share_msg: "当前浏览器不支持分享功能",
 
       comment_welcome: "欢迎在评论区分享您的想法！",
       comment_loading: "正在加载",
@@ -184,6 +185,7 @@ export default defineI18nConfig(() => ({
       post_tag_ai: "AI Generated",
       post_success_changed_msg:
         "The page changes. If it does not refresh automatically, please obtain it manually.",
+      post_share_msg: "Web share is not supported in your browser.",
 
       comment_welcome: "Welcome to share your thoughts!",
       comment_loading: "Loading",
