@@ -17,23 +17,7 @@
             <div v-for="(comment, index) in recentComments" :key="comment.id" class="relative my-6 space-y-1">
                 <!-- 评论内容 -->
                 <div class="flex flex-row justify-between items-center">
-                    <div class="group flex items-center">
-                        <UChip inset :show="comment.user_created.token ? true : false">
-                            <UAvatar size="md"
-                                :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                :alt="comment.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
-                        </UChip>
-                        <div class="ml-4">
-                            <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
-                                <div>{{ comment.user_created.first_name }}</div>
-                            </div>
-                            <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
-                                <span>{{ useFormatDate(comment.date_created) }}</span>
-                                <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
-                                <span>{{ comment.user_created.location }}</span>
-                            </div>
-                        </div>
-                    </div>
+                    <CommentUser :user="comment.user_created" :date="comment.date_created" />
                     <div class="text-gray-600 flex items-center space-x-5">
                         <CommonLike :target_id="comment.id" :user_id="authStore.user?.id" :target_type="`comment`" />
                         <UBadge v-if="authStore.user && authStore.user.id !== comment.user_created.id"
@@ -56,23 +40,7 @@
                     <div v-for="(reply, replyIndex) in comment.replies.slice(0, isExpanded[comment.id] ? comment.replies.length : 2)"
                         :key="reply.id" class="space-y-1">
                         <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
-                            <div class="group flex items-center">
-                                <UChip inset :show="reply.user_created.token ? true : false">
-                                    <UAvatar size="md"
-                                        :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                        :alt="reply.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
-                                </UChip>
-                                <div class="ml-4">
-                                    <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
-                                        <div>{{ reply.user_created.first_name }}</div>
-                                    </div>
-                                    <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
-                                        <span>{{ useFormatDate(reply.date_created) }}</span>
-                                        <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
-                                        <span>{{ reply.user_created.location }}</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <CommentUser :user="reply.user_created" :date="reply.date_created" />
                             <div class="text-gray-600 flex items-center space-x-5">
                                 <CommonLike :target_id="reply.id" :user_id="authStore.user?.id"
                                     :target_type="`comment`" />
@@ -115,23 +83,7 @@
                 <div v-for="(comment, index) in oldComments" :key="comment.id" class="relative my-6 space-y-1">
                     <!-- 评论内容 -->
                     <div class="flex flex-row justify-between items-center">
-                        <div class="group flex items-center">
-                            <UChip inset :show="comment.user_created.token ? true : false">
-                                <UAvatar size="md"
-                                    :src="`${useAssets(comment.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                    :alt="comment.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
-                            </UChip>
-                            <div class="ml-4">
-                                <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
-                                    <div>{{ comment.user_created.first_name }}</div>
-                                </div>
-                                <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
-                                    <span>{{ useFormatDate(comment.date_created) }}</span>
-                                    <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
-                                    <span>{{ comment.user_created.location }}</span>
-                                </div>
-                            </div>
-                        </div>
+                        <CommentUser :user="comment.user_created" :date="comment.date_created" />
                         <div class="text-gray-600 flex items-center space-x-5">
                             <CommonLike :target_id="comment.id" :user_id="authStore.user?.id"
                                 :target_type="`comment`" />
@@ -155,23 +107,7 @@
                         <div v-for="(reply, replyIndex) in comment.replies.slice(0, isExpanded[comment.id] ? comment.replies.length : 2)"
                             :key="reply.id" class="space-y-1">
                             <div class="flex flex-row justify-between items-center" :ref="setReplyRef(reply.id)">
-                                <div class="group flex items-center">
-                                    <UChip inset :show="reply.user_created.token ? true : false">
-                                        <UAvatar size="md"
-                                            :src="`${useAssets(reply.user_created.avatar)}?fit=outside&quality=40&withoutEnlargement&width=100&height=100`"
-                                            :alt="reply.user_created.first_name" class="ring-2 ring-gray-200 dark:ring-gray-800" />
-                                    </UChip>
-                                    <div class="ml-4">
-                                        <div class="flex items-center text-base font-medium text-gray-800 dark:text-gray-200 space-x-3">
-                                            <div>{{ reply.user_created.first_name }}</div>
-                                        </div>
-                                        <div class="text-[0.8rem] text-gray-600 space-x-1 flex items-center">
-                                            <span>{{ useFormatDate(reply.date_created) }}</span>
-                                            <UIcon name="ri:arrow-drop-right-line" class="w-5 h-5 text-gray-600" />
-                                            <span>{{ reply.user_created.location }}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <CommentUser :user="reply.user_created" :date="reply.date_created" />
                                 <div class="text-gray-600 flex items-center space-x-5">
                                     <CommonLike :target_id="reply.id" :user_id="authStore.user?.id"
                                         :target_type="`comment`" />
