@@ -20,7 +20,8 @@
             <div class="swiper-slide" v-for="post in group.posts" :key="post.id">
               <article class="card card-post">
                 <div class="card-header">
-                  <NuxtLink :href="post.id" class="card-title truncate text-gray-900 dark:text-gray-100" tabindex="-1">{{ post.title }}
+                  <NuxtLink :href="post.id" class="card-title truncate text-gray-900 dark:text-gray-100" tabindex="-1">
+                    {{ post.title }}
                   </NuxtLink>
                   <div class="card-meta mt-2.5 flex items-center">
                     <time class="card-date">
@@ -72,12 +73,20 @@ const { data: posts, error, refresh } = await useAsyncData('posts', async () => 
   )
 })
 
+const { show } = useWebNotification({
+  title: t('post_success_changed_msg'),
+  dir: 'auto',
+  renotify: true,
+  tag: 'post'
+});
+
 postUpdated((msg) => {
   if (msg === 'isUpdated') {
     refresh();
-    
+
     setTimeout(() => {
       showNotification('post-change', 'warning', t('post_success_changed_msg'));
+      show();
     }, 500)
   }
 });
